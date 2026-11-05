@@ -1,1 +1,59 @@
-
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>Untitled document - Google Docs</title>
+<link rel="icon" href="../assets/doc.svg"><link rel="stylesheet" href="../assets/play.css">
+</head><body>
+<div class="hud"><a href="../">←</a><span id="ttl">rocks</span><span class="sp"></span><span id="hint">arrows · space</span><span id="sc">0</span></div>
+<div class="stage"><canvas id="c"></canvas></div>
+<script>
+const W=620,H=460,cv=document.getElementById('c'),ctx=cv.getContext('2d');
+cv.width=W;cv.height=H;
+const scEl=document.getElementById('sc');
+let sx,sy,sa,svx,svy,rocks,bullets,score,lives,over,inv;
+function spawn(n,big){for(let i=0;i<n;i++){let x,y;
+ do{x=Math.random()*W;y=Math.random()*H}while(Math.hypot(x-sx,y-sy)<130);
+ const a=Math.random()*7,r=big?26+Math.random()*14:13+Math.random()*7;
+ rocks.push({x,y,vx:Math.cos(a)*(.6+Math.random()*1.4),vy:Math.sin(a)*(.6+Math.random()*1.4),r})}}
+function reset(){sx=W/2;sy=H/2;sa=0;svx=svy=0;rocks=[];bullets=[];score=0;lives=3;over=false;inv=90;
+ scEl.textContent='0';spawn(4,true)}
+function tick(){
+ if(over)return;
+ if(inv>0)inv--;
+ if(keys.ArrowLeft)sa-=.07; if(keys.ArrowRight)sa+=.07;
+ if(keys.ArrowUp){svx+=Math.cos(sa)*.16;svy+=Math.sin(sa)*.16}
+ svx*=.986;svy*=.986;sx+=svx;sy+=svy;
+ sx=(sx+W)%W;sy=(sy+H)%H;
+ for(const b of bullets){b.x+=b.vx;b.y+=b.vy;b.t--}
+ bullets=bullets.filter(b=>b.t>0);
+ for(const r of rocks){r.x+=r.vx;r.y+=r.vy;r.x=(r.x+W)%W;r.y=(r.y+H)%H}
+ for(let i=rocks.length-1;i>=0;i--){const r=rocks[i];
+  for(let j=bullets.length-1;j>=0;j--){const b=bullets[j];
+   if(Math.hypot(b.x-r.x,b.y-r.y)<r.r){bullets.splice(j,1);
+    score+=r.r>20?20:50;scEl.textContent=score;
+    if(r.r>20)spawn(2,false);rocks.splice(i,1);break}}
+  if(rocks[i]&&inv<=0&&Math.hypot(sx-r.x,sy-r.y)<r.r+9){
+   lives--;inv=90;if(lives<=0)over=true;
+   if(rocks.length===0)spawn(3,true);break}}
+ if(!rocks.length)spawn(4,true)}
+function draw(){
+ ctx.fillStyle='#0a0b0d';ctx.fillRect(0,0,W,H);
+ ctx.strokeStyle='#e9e9e4';ctx.lineWidth=1.6;
+ for(const r of rocks){ctx.beginPath();
+  for(let i=0;i<9;i++){const a=i/9*7;
+   ctx[i?'lineTo':'moveTo'](r.x+Math.cos(a)*r.r,r.y+Math.sin(a)*r.r)}ctx.closePath();ctx.stroke()}
+ ctx.fillStyle='#c9f24e';for(const b of bullets){ctx.fillRect(b.x-1.5,b.y-1.5,3,3)}
+ if(inv%8<4||inv<=0){ctx.save();ctx.translate(sx,sy);ctx.rotate(sa);
+  ctx.strokeStyle='#c9f24e';ctx.lineWidth=1.8;ctx.beginPath();
+  ctx.moveTo(11,0);ctx.lineTo(-7,6);ctx.lineTo(-4,0);ctx.lineTo(-7,-6);ctx.closePath();ctx.stroke();ctx.restore()}
+ ctx.fillStyle='#868c93';ctx.font='11px ui-monospace,monospace';ctx.fillText('lives '+lives,12,22);
+ if(over){ctx.fillStyle='rgba(0,0,0,.74)';ctx.fillRect(0,0,W,H);
+  ctx.textAlign='center';ctx.fillStyle='#e9e9e4';ctx.font='bold 20px ui-monospace,monospace';
+  ctx.fillText('GAME OVER',W/2,H/2-8);ctx.fillStyle='#868c93';ctx.font='12px ui-monospace,monospace';
+  ctx.fillText('score '+score,W/2,H/2+18);ctx.fillText('space to restart',W/2,H/2+42)}}
+const keys={};
+addEventListener('keydown',e=>{keys[e.key]=true;
+ if(e.key===' '){e.preventDefault();if(over){reset();return}
+  bullets.push({x:sx+Math.cos(sa)*13,y:sy+Math.sin(sa)*13,vx:Math.cos(sa)*7,vy:Math.sin(sa)*7,t:52})}});
+addEventListener('keyup',e=>{keys[e.key]=false});
+reset();(function l(){tick();draw();requestAnimationFrame(l)})();
+</script></body></html>
