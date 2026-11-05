@@ -676,4 +676,268 @@ body.m404::after{
   </div>
 </div>
 
-<div class="
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toastMsg">Saved</span>
+</div>
+
+<script>
+(function () {
+  var LS = { name: 'hub_name', url: 'hub_url', bar: 'hub_bar' };
+  var DEFAULTS = {
+    name: 'Untitled document - Google Docs',
+    url: 'https://docs.google.com/document/d/1a2B3c4D5e6F7g8H9i0J/edit',
+    bar: true
+  };
+  var PANIC_URL = 'https://classroom.google.com/h';
+  var ALT_TITLES = ['Untitled spreadsheet', 'Copy of Reading List', 'Class Notes', 'Google Classroom', 'School Tool', 'Class Link'];
+  var MIRRORS = ['', 'https://google.com', 'http://st4.schooltool.com/NewHartford/', 'https://login.classlink.com/'];
+  var current = { name: DEFAULTS.name, url: DEFAULTS.url, bar: DEFAULTS.bar };
+  var gone = false;
+
+  function load() {
+    try {
+      var n = localStorage.getItem(LS.name);
+      var u = localStorage.getItem(LS.url);
+      var b = localStorage.getItem(LS.bar);
+      if (n !== null) current.name = n;
+      if (u !== null) current.url = u;
+      if (b !== null) current.bar = b !== '0';
+    } catch (e) {}
+  }
+
+  function persist() {
+    try {
+      localStorage.setItem(LS.name, current.name);
+      localStorage.setItem(LS.url, current.url);
+      localStorage.setItem(LS.bar, current.bar ? '1' : '0');
+    } catch (e) {}
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function renderUrl(url) {
+    var clean = String(url || '').replace(/^https?:\/\//i, '');
+    var i = clean.indexOf('/');
+    var host = i === -1 ? clean : clean.slice(0, i);
+    var path = i === -1 ? '' : clean.slice(i);
+    return '<b>' + esc(host) + '</b>' + esc(path);
+  }
+
+  function apply() {
+    document.title = current.name;
+    var urlEl = document.getElementById('urlDisplay');
+    if (urlEl) urlEl.innerHTML = renderUrl(current.url);
+    var bar = document.getElementById('fakeUrlBar');
+    if (bar) {
+      if (current.bar) bar.classList.remove('hidden');
+      else bar.classList.add('hidden');
+    }
+  }
+
+  function toast(msg) {
+    var t = document.getElementById('toast');
+    var m = document.getElementById('toastMsg');
+    if (!t || !m) return;
+    m.textContent = msg;
+    t.classList.add('on');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function () { t.classList.remove('on'); }, 2200);
+  }
+
+  function openSettings() {
+    document.getElementById('siteNameInput').value = current.name;
+    document.getElementById('urlInput').value = current.url;
+    var sw = document.getElementById('urlBarSwitch');
+    sw.classList.toggle('on', current.bar);
+    sw.setAttribute('aria-checked', current.bar ? 'true' : 'false');
+    document.getElementById('settingsModal').classList.add('on');
+  }
+
+  function closeSettings() {
+    document.getElementById('settingsModal').classList.remove('on');
+  }
+
+  function saveSettings() {
+    var n = document.getElementById('siteNameInput').value.trim();
+    var u = document.getElementById('urlInput').value.trim();
+    var b = document.getElementById('urlBarSwitch').classList.contains('on');
+    current.name = n || DEFAULTS.name;
+    current.url = u || DEFAULTS.url;
+    current.bar = b;
+    persist();
+    apply();
+    closeSettings();
+    toast('Settings saved');
+  }
+
+  function resetSettings() {
+    current.name = DEFAULTS.name;
+    current.url = DEFAULTS.url;
+    current.bar = DEFAULTS.bar;
+    persist();
+    apply();
+    document.getElementById('siteNameInput').value = current.name;
+    document.getElementById('urlInput').value = current.url;
+    var sw = document.getElementById('urlBarSwitch');
+    sw.classList.toggle('on', current.bar);
+    sw.setAttribute('aria-checked', current.bar ? 'true' : 'false');
+    toast('Reset to defaults');
+  }
+
+  function panic() {
+    if (gone) return;
+    gone = true;
+    var p = document.getElementById('panic');
+    if (p) p.classList.add('on');
+    setTimeout(function () { location.replace(PANIC_URL); }, 1200);
+  }
+
+  function cloak() {
+    var w = window.open('about:blank', '_blank');
+    if (!w) { toast('Popup blocked'); return; }
+    var base = location.origin + location.pathname.replace(/[^/]*$/, '');
+    var html = '<!doctype html>' + document.documentElement.outerHTML;
+    html = html.replace(/<head([^>]*)>/i, '<head$1><base href="' + base + '">');
+    try {
+      w.document.open();
+      w.document.write(html);
+      w.document.close();
+    } catch (e) { toast('Cloak failed'); }
+  }
+
+  function probeMirrors() {
+    var list = document.getElementById('mir');
+    if (!list) return;
+    list.innerHTML = '';
+    MIRRORS.forEach(function (m, i) {
+      var li = document.createElement('li');
+      if (i === 0) {
+        var span = document.createElement('span');
+        span.textContent = 'this host';
+        li.appendChild(span);
+      } else {
+        var a = document.createElement('a');
+        a.href = m + location.pathname;
+        a.target = '_self';
+        var label = m.replace(/^https?:\/\//, '').split('/')[0];
+        a.innerHTML = esc(label) + ' <span class="lat" data-lat>...</span>';
+        li.appendChild(a);
+        var t0 = performance.now();
+        fetch(m + '/icon.svg', { mode: 'no-cors', cache: 'no-store' })
+          .then(function () {
+            var lat = a.querySelector('[data-lat]');
+            if (lat) lat.textContent = Math.round(performance.now() - t0) + 'ms';
+          })
+          .catch(function () { a.style.opacity = '0.4'; });
+      }
+      list.appendChild(li);
+    });
+  }
+
+  function initFilters() {
+    var q = document.getElementById('q');
+    var grid = document.getElementById('grid');
+    var chips = document.querySelectorAll('.chip');
+    var activeCat = 'all';
+
+    function filter() {
+      var v = q.value.toLowerCase().trim();
+      Array.prototype.forEach.call(grid.children, function (c) {
+        var cat = c.getAttribute('data-cat') || '';
+        var text = (c.getAttribute('data-t') + ' ' + c.textContent.toLowerCase());
+        var okCat = activeCat === 'all' || cat === activeCat;
+        var okText = !v || text.indexOf(v) !== -1;
+        c.hidden = !(okCat && okText);
+      });
+    }
+
+    q.addEventListener('input', filter);
+    Array.prototype.forEach.call(chips, function (chip) {
+      chip.addEventListener('click', function () {
+        Array.prototype.forEach.call(chips, function (c) { c.classList.remove('on'); });
+        chip.classList.add('on');
+        activeCat = chip.getAttribute('data-cat');
+        filter();
+      });
+    });
+
+    addEventListener('keydown', function (e) {
+      if (e.key === '/' && document.activeElement !== q) {
+        e.preventDefault();
+        q.focus();
+      }
+    });
+  }
+
+  function init() {
+    load();
+    apply();
+    probeMirrors();
+    initFilters();
+
+    document.getElementById('settingsBtn').addEventListener('click', openSettings);
+    document.getElementById('closeSettings').addEventListener('click', closeSettings);
+    document.getElementById('saveSettings').addEventListener('click', saveSettings);
+    document.getElementById('resetSettings').addEventListener('click', resetSettings);
+    document.getElementById('settingsModal').addEventListener('click', function (e) {
+      if (e.target.id === 'settingsModal') closeSettings();
+    });
+
+    var sw = document.getElementById('urlBarSwitch');
+    sw.addEventListener('click', function () {
+      sw.classList.toggle('on');
+      sw.setAttribute('aria-checked', sw.classList.contains('on') ? 'true' : 'false');
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll('[data-act]'), function (btn) {
+      btn.addEventListener('click', function () {
+        var act = btn.getAttribute('data-act');
+        if (act === 'panic') panic();
+        if (act === 'cloak') cloak();
+      });
+    });
+
+    addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') panic();
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'x') {
+        e.preventDefault();
+        panic();
+      }
+    }, true);
+
+    if (new URLSearchParams(location.search).has('404')) {
+      document.body.classList.add('m404');
+      document.title = 'Error 404 (Not Found)';
+    }
+
+    setInterval(function () {
+      if (gone) return;
+      if (current.name !== DEFAULTS.name) return;
+      if (Math.random() > 0.45) return;
+      document.title = ALT_TITLES[Math.random() * ALT_TITLES.length | 0];
+    }, 24000);
+
+    var ver = document.getElementById('ver');
+    if (ver) ver.textContent = Math.random().toString(36).slice(2, 7);
+
+    if ('serviceWorker' in navigator) {
+      addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js').catch(function () {});
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>
