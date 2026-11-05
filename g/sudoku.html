@@ -1,1 +1,69 @@
-
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>Untitled document - Google Docs</title>
+<link rel="icon" href="../assets/doc.svg"><link rel="stylesheet" href="../assets/play.css">
+<style>
+#b{display:grid;grid-template-columns:repeat(9,42px);background:#2b323a;gap:1px;border:2px solid #3c444e}
+.c{width:42px;height:42px;display:grid;place-items:center;background:#131619;
+ font:600 17px ui-monospace,monospace;color:#c9f24e;cursor:pointer}
+.c.given{color:#e9e9e4;background:#1b2026}
+.c.sel{background:#2c3a12}
+.c.bad{color:#ff7a7a}
+.c:nth-child(3n){border-right:2px solid #3c444e}
+.c:nth-child(9n){border-right:none}
+#pad{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap;justify-content:center;max-width:420px}
+</style></head><body>
+<div class="hud"><a href="../">←</a><span id="ttl">sudoku</span><span class="sp"></span><span id="hint">pick a cell · type</span><span id="sc">—</span></div>
+<div class="stage" style="flex-direction:column">
+ <div id="b"></div>
+ <div id="pad"></div>
+</div>
+<script>
+const b=document.getElementById('b'),pad=document.getElementById('pad'),scEl=document.getElementById('sc');
+let sol,puz,sel=null,over;
+function ok(g,i,v){const r=(i/9)|0,c=i%9;
+ for(let k=0;k<9;k++){if(g[r*9+k]===v&&r*9+k!==i)return false;if(g[k*9+c]===v&&k*9+c!==i)return false}
+ const br=r-r%3,bc=c-c%3;
+ for(let y=0;y<3;y++)for(let x=0;x<3;x++){const j=(br+y)*9+bc+x;if(g[j]===v&&j!==i)return false}
+ return true}
+function solve(g){const i=g.indexOf(0);if(i<0)return true;
+ for(let v=1;v<=9;v++){if(ok(g,i,v)){g[i]=v;if(solve(g))return true;g[i]=0}}
+ return false}
+function build(){
+ const g=Array(81).fill(0);
+ for(let k=0;k<9;k++){const base=(k%3)*3+((k/3)|0)*27;
+  for(let n=0;n<9;n++){const i=base+(n%3)+(n/3|0)*9;g[i]=0}
+  const vals=[1,2,3,4,5,6,7,8,9].sort(()=>Math.random()-.5);
+  for(const v of vals){const empties=[];for(let y=0;y<3;y++)for(let x=0;x<3;x++){
+    const i=((k/3|0)*3+y)*9+(k%3)*3+x;if(!g[i])empties.push(i)}
+   for(const i of empties){if(ok(g,i,v)){g[i]=v;break}}}}
+ solve(g);
+ return g}
+function reset(){
+ sol=build();puz=sol.slice();over=false;sel=null;scEl.textContent='—';
+ let removed=0;while(removed<46){const i=Math.random()*81|0;
+  if(!puz[i])continue;puz[i]=0;removed++}
+ b.innerHTML='';
+ puz.forEach((v,i)=>{const d=document.createElement('div');
+  d.className='c'+(v?' given':'');d.textContent=v||'';
+  d.addEventListener('click',()=>{if(over)return;sel=i;paint()});b.appendChild(d)});
+ pad.innerHTML='';
+ for(let n=1;n<=9;n++){const btn=document.createElement('button');btn.textContent=n;
+  btn.onclick=()=>put(n);pad.appendChild(btn)}
+ const clr=document.createElement('button');clr.textContent='clear';clr.onclick=()=>put(0);pad.appendChild(clr)}
+function put(v){
+ if(sel==null||over||puz[sel]&&b.children[sel].classList.contains('given'))return;
+ puz[sel]=v;paint();
+ if(puz.every((x,i)=>x===sol[i])){over=true;scEl.textContent='solved';
+  b.querySelectorAll('.c').forEach(d=>d.style.background='#22300f')}}
+function paint(){
+ [...b.children].forEach((d,i)=>{
+  d.textContent=puz[i]||'';
+  d.classList.toggle('sel',i===sel);
+  d.classList.toggle('bad',!!puz[i]&&!ok(puz.map(x=>x),i,puz[i])&&puz[i]!==sol[i])})}
+addEventListener('keydown',e=>{
+ if(/^[1-9]$/.test(e.key))put(+e.key);
+ else if(e.key==='Backspace'||e.key==='Delete')put(0);
+ else if(e.key===' '&&over)reset()});
+reset();
+</script></body></html>
