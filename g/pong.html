@@ -1,1 +1,48 @@
-
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>Untitled document - Google Docs</title>
+<link rel="icon" href="../assets/doc.svg"><link rel="stylesheet" href="../assets/play.css">
+</head><body>
+<div class="hud"><a href="../">←</a><span id="ttl">pong</span><span class="sp"></span><span id="hint">mouse / up down</span><span id="sc">0 : 0</span></div>
+<div class="stage"><canvas id="c"></canvas></div>
+<script>
+const W=520,H=420,cv=document.getElementById('c'),ctx=cv.getContext('2d');
+cv.width=W;cv.height=H;
+const scEl=document.getElementById('sc');
+const PH=74,PW=9;
+let py,ay,bx,by,bvx,bvy,ps,as,over,slow;
+function serve(d){bx=W/2;by=H/2;const a=Math.random()*.7-.35;
+ bvx=d*4.4;bvy=a*4.4;slow=40}
+function reset(){py=ay=H/2-PH/2;ps=as=0;over=false;scEl.textContent='0 : 0';serve(1)}
+addEventListener('keydown',e=>{if(e.key==='ArrowUp')py-=32;if(e.key==='ArrowDown')py+=32;
+ if(e.key===' '&&over)reset()});
+cv.addEventListener('mousemove',e=>{const r=cv.getBoundingClientRect();py=(e.clientY-r.top)*(H/r.height)-PH/2});
+cv.addEventListener('touchmove',e=>{const r=cv.getBoundingClientRect();py=(e.touches[0].clientY-r.top)*(H/r.height)-PH/2;e.preventDefault()},{passive:false});
+function tick(){
+ if(over)return;
+ py=Math.max(0,Math.min(H-PH,py));
+ const target=by-PH/2+ (bvy>0? 12:-12);
+ ay+=Math.max(-4.1,Math.min(4.1,(target-ay)*.11));
+ ay=Math.max(0,Math.min(H-PH,ay));
+ bx+=bvx;by+=bvy;
+ if(by<6){by=6;bvy*=-1}
+ if(by>H-6){by=H-6;bvy*=-1}
+ if(bvx<0&&bx<24+PW&&bx>20&&by>py&&by<py+PH){bvx=Math.abs(bvx)*1.04;bvy+=(by-(py+PH/2))*.09}
+ if(bvx>0&&bx>W-24-PW&&bx<W-20&&by>ay&&by<ay+PH){bvx=-Math.abs(bvx)*1.04;bvy+=(by-(ay+PH/2))*.09}
+ if(bx<0){as++;scEl.textContent=ps+' : '+as;serve(1)}
+ if(bx>W){ps++;scEl.textContent=ps+' : '+as;serve(-1)}
+ if(ps>=7||as>=7)over=true}
+function draw(){
+ ctx.fillStyle='#0a0b0d';ctx.fillRect(0,0,W,H);
+ ctx.strokeStyle='#1b2026';ctx.lineWidth=2;ctx.setLineDash([7,11]);
+ ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();ctx.setLineDash([]);
+ ctx.fillStyle='#c9f24e';ctx.fillRect(20,py,PW,PH);
+ ctx.fillStyle='#ff7a7a';ctx.fillRect(W-20-PW,ay,PW,PH);
+ ctx.fillStyle='#e9e9e4';ctx.beginPath();ctx.arc(bx,by,7,0,7);ctx.fill();
+ if(over){ctx.fillStyle='rgba(0,0,0,.74)';ctx.fillRect(0,0,W,H);
+  ctx.textAlign='center';ctx.fillStyle='#e9e9e4';ctx.font='bold 20px ui-monospace,monospace';
+  ctx.fillText(ps>as?'YOU WIN':'YOU LOSE',W/2,H/2-10);
+  ctx.fillStyle='#868c93';ctx.font='12px ui-monospace,monospace';ctx.fillText('space to restart',W/2,H/2+16)}}
+(function l(){tick();draw();requestAnimationFrame(l)})();
+reset();
+</script></body></html>
