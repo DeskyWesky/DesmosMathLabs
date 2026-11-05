@@ -6,402 +6,373 @@
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#0a0a0c">
 <title id="docTitle">SerumOS</title>
-<link rel="icon" id="docFavicon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23ffb03a'/%3E%3Cpath d='M20 16h18l10 10v22a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4V20a4 4 0 0 1 4-4z' fill='%23fff' opacity='.95'/%3E%3C/svg%3E">
+<link rel="icon" id="docFavicon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23f7d466'/%3E%3Cpath d='M20 16h18l10 10v22a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4V20a4 4 0 0 1 4-4z' fill='%23fff' opacity='.95'/%3E%3C/svg%3E">
 <style>
 :root {
   --bg: #08080a;
   --panel: rgba(20, 20, 24, 0.75);
   --panel-solid: #141418;
   --line: rgba(255, 255, 255, 0.08);
-  --line-hover: rgba(255, 255, 255, 0.18);
   --txt: #f0f0f5;
   --dim: #8e8e99;
   --acc: #f7d466; 
   --acc-bg: rgba(247, 212, 102, 0.15);
-  --danger: #ff5555;
   --radius: 12px;
   --radius-sm: 8px;
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --shadow: 0 12px 40px rgba(0,0,0,0.5);
   --shadow-lg: 0 24px 64px rgba(0,0,0,0.7);
   --wallpaper: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop') center/cover no-repeat;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
-body { 
-  background: var(--bg); 
-  color: var(--txt); 
-  font-family: var(--font); 
-  height: 100vh; 
-  overflow: hidden; 
-  background-image: var(--wallpaper);
-  background-size: cover;
-  background-position: center;
-}
+body { background: #000; color: var(--txt); font-family: var(--font); height: 100vh; overflow: hidden; }
 
-.wallpaper-overlay {
-  position: fixed; inset: 0;
-  background: radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
-  backdrop-filter: blur(8px);
-  z-index: 0;
-  pointer-events: none;
+#welcome-screen {
+  position: fixed; inset: 0; z-index: 99999;
+  background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop') center/cover no-repeat;
+  display: flex; align-items: center; justify-content: center;
+  animation: fadeIn 0.5s ease-out;
 }
+#welcome-screen::before {
+  content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(12px);
+}
+.welcome-modal {
+  position: relative; width: 460px; background: rgba(20, 20, 25, 0.85); border: 1px solid var(--line);
+  border-radius: 16px; padding: 32px; box-shadow: var(--shadow-lg); display: flex; flex-direction: column; gap: 24px;
+  animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+.welcome-logo { width: 48px; height: 48px; background: var(--acc); border-radius: 12px; display: grid; place-items: center; font-weight: bold; color: #000; font-size: 24px; }
+.welcome-modal h2 { font-size: 24px; font-weight: 600; letter-spacing: -0.5px; }
+.welcome-modal p { font-size: 13px; color: var(--dim); line-height: 1.6; }
+.welcome-btn { background: #fff; color: #000; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; text-align: center; transition: 0.2s; border: none; }
+.welcome-btn:hover { background: #e0e0e0; }
 
-.topbar {
-  position: absolute; top: 0; left: 0; right: 0; height: 40px;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 20px; z-index: 10; font-size: 13px; font-weight: 500;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
-  pointer-events: none;
-}
+#os { display: none; height: 100vh; width: 100vw; background-image: var(--wallpaper); background-size: cover; background-position: center; position: relative; }
+#os.on { display: block; }
+
+.wallpaper-overlay { position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%); z-index: 0; pointer-events: none; }
+
+.topbar { position: absolute; top: 0; left: 0; right: 0; height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; z-index: 10; font-size: 13px; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.8); pointer-events: none; transition: top 0.3s; }
 .topbar .left, .topbar .right { display: flex; gap: 16px; pointer-events: auto; }
-.topbar .center { font-size: 24px; font-weight: 300; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+.topbar .center { font-size: 20px; font-weight: 400; letter-spacing: 0.5px; }
+.topbar .banner { display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.5); padding: 8px 12px; border-radius: 8px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+.topbar .banner img { width: 32px; height: 32px; border-radius: 4px; }
+.topbar .banner div { display: flex; flex-direction: column; gap: 2px; }
+.topbar .banner strong { font-size: 12px; }
+.topbar .banner span { font-size: 10px; color: var(--dim); }
+.topbar .banner button { background: #ccc; color: #000; border: none; padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; margin-left: 12px; }
 
-.desktop {
-  position: absolute; inset: 50px 0 100px 0; padding: 20px 30px;
-  display: grid; grid-template-columns: repeat(auto-fill, 90px); grid-auto-rows: 100px;
-  gap: 16px; align-content: start; z-index: 5;
-}
-.icon {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 8px; cursor: pointer; transition: transform 0.1s, background 0.2s;
-  border-radius: var(--radius-sm); padding: 8px;
-}
-.icon:hover { background: rgba(255,255,255,0.1); backdrop-filter: blur(4px); }
+.desktop { position: absolute; inset: 60px 0 100px 0; padding: 20px 30px; display: grid; grid-template-columns: repeat(auto-fill, 90px); grid-auto-rows: 100px; gap: 16px; align-content: start; z-index: 5; }
+.icon { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: transform 0.1s, background 0.2s; border-radius: var(--radius-sm); padding: 8px; text-shadow: 0 1px 3px rgba(0,0,0,0.9); }
+.icon:hover { background: rgba(255,255,255,0.15); backdrop-filter: blur(4px); }
 .icon:active { transform: scale(0.95); }
-.icon svg { width: 48px; height: 48px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4)); }
-.icon span { font-size: 12px; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+.icon svg { width: 48px; height: 48px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); }
+.icon span { font-size: 12px; font-weight: 500; }
 
-.dock-container {
-  position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-  z-index: 10; display: flex; justify-content: center;
-}
-.dock {
-  display: flex; gap: 8px; padding: 10px; border-radius: 20px;
-  background: rgba(20, 20, 25, 0.6); backdrop-filter: blur(20px);
-  border: 1px solid var(--line); box-shadow: var(--shadow);
-  align-items: center;
-}
-.dock-icon {
-  width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: transform 0.2s, background 0.2s; position: relative;
-}
-.dock-icon:hover { transform: translateY(-4px) scale(1.05); background: rgba(255,255,255,0.1); }
-.dock-icon svg { width: 32px; height: 32px; }
-.dock-separator { width: 1px; height: 32px; background: var(--line); margin: 0 4px; }
+.taskbar-container { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; justify-content: center; }
+.taskbar { display: flex; gap: 6px; padding: 10px 16px; border-radius: 24px; background: rgba(20, 20, 25, 0.7); backdrop-filter: blur(24px); border: 1px solid var(--line); box-shadow: var(--shadow); align-items: center; }
+.task-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s, background 0.2s; position: relative; }
+.task-icon:hover { transform: translateY(-4px); background: rgba(255,255,255,0.1); }
+.task-icon.active { background: rgba(255,255,255,0.15); }
+.task-icon.active::after { content: ""; position: absolute; bottom: -4px; width: 6px; height: 6px; border-radius: 50%; background: var(--acc); }
+.task-icon svg { width: 28px; height: 28px; }
+.task-separator { width: 1px; height: 24px; background: var(--line); margin: 0 4px; }
 
-.window {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: 900px; max-width: 95vw; height: 650px; max-height: 85vh;
-  background: var(--panel); backdrop-filter: blur(24px);
-  border: 1px solid var(--line); border-radius: var(--radius);
-  box-shadow: var(--shadow-lg); z-index: 100; display: none; flex-direction: column;
-  overflow: hidden; animation: winIn 0.25s cubic-bezier(0.2, 0.8, 0.3, 1.1);
-}
+.window { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 850px; max-width: 95vw; height: 600px; max-height: 85vh; background: var(--panel); backdrop-filter: blur(32px); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-lg); z-index: 100; display: none; flex-direction: column; overflow: hidden; animation: winIn 0.25s cubic-bezier(0.2, 0.8, 0.3, 1.1); }
 .window.on { display: flex; }
 @keyframes winIn { from { opacity: 0; transform: translate(-50%, -48%) scale(0.98); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-.win-header {
-  height: 48px; display: flex; align-items: center; justify-content: space-between;
-  padding: 0 16px; border-bottom: 1px solid var(--line); background: rgba(0,0,0,0.2);
-  flex-shrink: 0;
-}
+.win-header { height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 1px solid var(--line); background: rgba(0,0,0,0.2); flex-shrink: 0; cursor: move; }
 .win-title { font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
 .win-controls { display: flex; gap: 12px; }
-.win-btn {
-  width: 14px; height: 14px; border-radius: 50%; border: none; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; color: transparent; transition: 0.2s;
-}
+.win-btn { width: 12px; height: 12px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: transparent; transition: 0.2s; }
 .win-btn:hover { color: rgba(0,0,0,0.5); }
 .win-btn.close { background: #ff5f56; }
 .win-btn.min { background: #ffbd2e; }
 .win-btn.max { background: #27c93f; }
-
 .win-body { display: flex; flex: 1; overflow: hidden; }
 
-.settings-sidebar {
-  width: 220px; padding: 16px 8px; border-right: 1px solid var(--line);
-  display: flex; flex-direction: column; gap: 4px; background: rgba(0,0,0,0.1);
-}
-.settings-tab {
-  padding: 10px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500;
-  cursor: pointer; display: flex; align-items: center; gap: 10px; color: var(--dim);
-  transition: 0.15s;
-}
+.settings-sidebar { width: 220px; padding: 16px 8px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 4px; background: rgba(0,0,0,0.15); }
+.settings-tab { padding: 10px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 10px; color: var(--dim); transition: 0.15s; }
 .settings-tab:hover { background: rgba(255,255,255,0.05); color: var(--txt); }
 .settings-tab.on { background: var(--acc-bg); color: var(--acc); }
 .settings-tab svg { width: 16px; height: 16px; }
 
 .settings-content { flex: 1; padding: 32px; overflow-y: auto; }
-.settings-content h2 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
+.settings-content h2 { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
 .settings-content p.sub { color: var(--dim); font-size: 13px; margin-bottom: 24px; }
-
-.settings-group {
-  background: rgba(0,0,0,0.15); border: 1px solid var(--line); border-radius: var(--radius);
-  padding: 20px; margin-bottom: 20px;
-}
+.settings-group { background: rgba(0,0,0,0.2); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; }
 .settings-group h3 { font-size: 14px; margin-bottom: 16px; font-weight: 600; }
-.settings-row {
-  display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
-}
+.settings-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
 .settings-row:last-child { margin-bottom: 0; }
 .settings-label { font-size: 13px; color: var(--txt); }
 .settings-label small { display: block; color: var(--dim); font-size: 11px; margin-top: 2px; }
 
-select, input[type="text"] {
-  background: #000; border: 1px solid var(--line); color: var(--txt);
-  padding: 8px 12px; border-radius: var(--radius-sm); font-size: 13px; outline: none;
-  font-family: var(--font); transition: 0.15s;
-}
+select, input[type="text"] { background: #000; border: 1px solid var(--line); color: var(--txt); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 13px; outline: none; font-family: var(--font); transition: 0.15s; }
 select:focus, input[type="text"]:focus { border-color: var(--acc); }
-select { cursor: pointer; appearance: none; padding-right: 32px; }
+select { cursor: pointer; appearance: none; padding-right: 32px; width: 100%; }
 .select-wrapper { position: relative; }
-.select-wrapper::after {
-  content: "▼"; position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
-  font-size: 8px; color: var(--dim); pointer-events: none;
-}
+.select-wrapper::after { content: "▼"; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 9px; color: var(--dim); pointer-events: none; }
 
-.switch {
-  width: 40px; height: 22px; background: #333; border-radius: 20px; position: relative;
-  cursor: pointer; transition: 0.2s;
-}
-.switch::after {
-  content: ""; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px;
-  background: #fff; border-radius: 50%; transition: 0.2s;
-}
+.switch { width: 40px; height: 22px; background: #333; border-radius: 20px; position: relative; cursor: pointer; transition: 0.2s; flex-shrink: 0; }
+.switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; background: #fff; border-radius: 50%; transition: 0.2s; }
 .switch.on { background: var(--acc); }
 .switch.on::after { transform: translateX(18px); background: #000; }
 
 .game-container { flex: 1; display: flex; flex-direction: column; background: #000; position: relative; }
 .game-frame { width: 100%; height: 100%; border: none; flex: 1; }
-.loader {
-  position: absolute; inset: 0; background: #000; display: flex; align-items: center; justify-content: center;
-  z-index: 2; transition: opacity 0.3s;
-}
+.loader { position: absolute; inset: 0; background: #000; display: flex; align-items: center; justify-content: center; z-index: 2; transition: opacity 0.3s; }
 .loader.off { opacity: 0; pointer-events: none; }
 .spinner { width: 32px; height: 32px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--acc); border-radius: 50%; animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.toast {
-  position: absolute; bottom: 100px; left: 50%; transform: translate(-50%, 20px);
-  background: var(--panel-solid); border: 1px solid var(--line); padding: 12px 24px;
-  border-radius: 30px; font-size: 13px; box-shadow: var(--shadow); z-index: 1000;
-  opacity: 0; pointer-events: none; transition: 0.3s; display: flex; align-items: center; gap: 8px;
-}
-.toast.on { opacity: 1; transform: translate(-50%, 0); }
-
-.fake-bar {
-  position: absolute; top: 0; left: 0; right: 0; height: 44px;
-  background: #202124; border-bottom: 1px solid #3c4043;
-  display: none; align-items: center; padding: 0 16px; gap: 12px; z-index: 9999;
-}
+.fake-bar { position: absolute; top: 0; left: 0; right: 0; height: 44px; background: #202124; border-bottom: 1px solid #3c4043; display: none; align-items: center; padding: 0 16px; gap: 12px; z-index: 9999; }
 .fake-bar.on { display: flex; }
 .fake-bar .dots { display: flex; gap: 6px; }
 .fake-bar .dots i { width: 10px; height: 10px; border-radius: 50%; }
 .fake-bar .dots i:nth-child(1) { background: #ff5f56; }
 .fake-bar .dots i:nth-child(2) { background: #ffbd2e; }
 .fake-bar .dots i:nth-child(3) { background: #27c93f; }
-.fake-bar .url {
-  flex: 1; background: #202124; border: 1px solid #5f6368; border-radius: 20px;
-  height: 28px; display: flex; align-items: center; padding: 0 12px; gap: 8px;
-  font-size: 12px; font-family: var(--font); color: #9aa0a6;
-}
+.fake-bar .url { flex: 1; background: #202124; border: 1px solid #5f6368; border-radius: 20px; height: 28px; display: flex; align-items: center; padding: 0 12px; gap: 8px; font-size: 12px; font-family: var(--font); color: #9aa0a6; }
 .fake-bar .url img { width: 16px; height: 16px; }
 .fake-bar .url b { color: #e8eaed; font-weight: normal; }
+
+.btn { background: var(--panel-solid); border: 1px solid var(--line); color: #fff; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-family: var(--font); font-size: 12px; transition: 0.2s; }
+.btn:hover { background: #222; }
 </style>
 </head>
 <body>
 
-<div class="fake-bar" id="fakeBar">
-  <div class="dots"><i></i><i></i><i></i></div>
-  <div class="url">
-    <img id="fakeFavicon" src="" alt="" style="display:none">
-    <span id="fakeUrlText"><b>docs.google.com</b>/document/d/1a2B3c4D5e6F7g8H9i0J/edit</span>
+<div id="welcome-screen">
+  <div class="welcome-modal">
+    <div class="welcome-logo">S</div>
+    <div>
+      <h2>Welcome to Serum</h2>
+      <p>A whole desktop that lives in your browser — games, music, anime, movies, and a real proxy browser. Here's the thirty-second tour.</p>
+    </div>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px;">
+      <div style="display:flex; gap:4px;">
+        <div style="width:18px; height:4px; background:#fff; border-radius:2px;"></div>
+        <div style="width:4px; height:4px; background:#555; border-radius:50%;"></div>
+        <div style="width:4px; height:4px; background:#555; border-radius:50%;"></div>
+        <div style="width:4px; height:4px; background:#555; border-radius:50%;"></div>
+        <div style="width:4px; height:4px; background:#555; border-radius:50%;"></div>
+      </div>
+      <button class="welcome-btn" onclick="enterOS()">Get started</button>
+    </div>
   </div>
 </div>
 
-<div class="wallpaper-overlay"></div>
-
-<div class="topbar">
-  <div class="left">
-    <span id="dateDisplay">Thursday, November 5</span>
-  </div>
-  <div class="center" id="clockDisplay">1:03 PM</div>
-  <div class="right">
-    <span>74°F Partly sunny</span>
-  </div>
-</div>
-
-<div class="desktop" id="desktop">
-  <div class="icon" onclick="openApp('game', 'https://cdn.jsdelivr.net/gh/juliensimon/browser-games@main/pong/index.html', 'Pong')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#c9f24e" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4m4 0h4"/></svg>
-    <span>Pong</span>
-  </div>
-  <div class="icon" onclick="openApp('game', 'https://cdn.jsdelivr.net/gh/ramazancetinkaya/snake-game@main/index.html', 'Snake')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#7fe6c0" stroke-width="2"><path d="M4 4h4v4H4zM12 4h4v4h-4zM8 8h4v4H8zM12 12h4v4h-4zM16 16h4v4h-4z"/></svg>
-    <span>Snake</span>
-  </div>
-  <div class="icon" onclick="openApp('game', 'https://cdn.jsdelivr.net/gh/juliensimon/browser-games@main/breakout/index.html', 'Breakout')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#ff8fc7" stroke-width="2"><rect x="4" y="4" width="16" height="4"/><rect x="6" y="10" width="12" height="4"/><circle cx="12" cy="18" r="2"/></svg>
-    <span>Breakout</span>
-  </div>
-  <div class="icon" onclick="openApp('game', 'https://cdn.jsdelivr.net/gh/jakesgordon/javascript-tetris@master/index.html', 'Tetris')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#b48bff" stroke-width="2"><path d="M4 4h6v6H4zM10 10h6v6h-6zM4 16h6v4H4zM16 4h4v4h-4z"/></svg>
-    <span>Tetris</span>
-  </div>
-  <div class="icon" onclick="openApp('game', 'https://cdn.jsdelivr.net/gh/juliensimon/browser-games@main/space-invaders/index.html', 'Invaders')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#ff7a7a" stroke-width="2"><path d="M12 2v4M8 6h8v6H8zM4 12h16v6H4zM8 18v4M16 18v4"/></svg>
-    <span>Invaders</span>
-  </div>
-  <div class="icon" onclick="openApp('settings')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-    <span>Settings</span>
-  </div>
-</div>
-
-<div class="dock-container">
-  <div class="dock">
-    <div class="dock-icon" onclick="openApp('game', 'https://cdn.jsdelivr.net/gh/juliensimon/browser-games@main/pong/index.html', 'Pong')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#c9f24e" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4m4 0h4"/></svg>
+<div id="os">
+  <div class="fake-bar" id="fakeBar">
+    <div class="dots"><i></i><i></i><i></i></div>
+    <div class="url">
+      <img id="fakeFavicon" src="" alt="" style="display:none">
+      <span id="fakeUrlText"><b>docs.google.com</b>/document/d/1a2B3c4D5e6F7g8H9i0J/edit</span>
     </div>
-    <div class="dock-icon" onclick="openApp('game', 'https://cdn.jsdelivr.net/gh/ramazancetinkaya/snake-game@main/index.html', 'Snake')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#7fe6c0" stroke-width="2"><path d="M4 4h4v4H4zM12 4h4v4h-4zM8 8h4v4H8zM12 12h4v4h-4zM16 16h4v4h-4z"/></svg>
+  </div>
+
+  <div class="wallpaper-overlay"></div>
+
+  <div class="topbar" id="topbar">
+    <div class="left"><span id="dateDisplay">Thursday, November 5</span></div>
+    <div class="center" id="clockDisplay">1:03 PM</div>
+    <div class="right">
+      <div class="banner">
+        <img src="https://cdn-icons-png.flaticon.com/512/2699/2699167.png" alt="PC">
+        <div>
+          <strong>Work Faster, Powerful PC Tools</strong>
+          <span>Discover top productivity tools for work</span>
+        </div>
+        <button>Continue</button>
+      </div>
+      <span style="margin-left:16px; display:flex; align-items:center; gap:8px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+        74°F Partly sunny
+      </span>
     </div>
-    <div class="dock-icon" onclick="openApp('game', 'https://cdn.jsdelivr.net/gh/juliensimon/browser-games@main/breakout/index.html', 'Breakout')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#ff8fc7" stroke-width="2"><rect x="4" y="4" width="16" height="4"/><rect x="6" y="10" width="12" height="4"/><circle cx="12" cy="18" r="2"/></svg>
+  </div>
+
+  <div class="desktop" id="desktop">
+    <div class="icon" onclick="openApp('game', 'pong')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#107c10" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4m4 0h4"/></svg>
+      <span>Pong</span>
     </div>
-    <div class="dock-separator"></div>
-    <div class="dock-icon" onclick="openApp('settings')">
+    <div class="icon" onclick="openApp('game', 'snake')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#007acc" stroke-width="2"><path d="M4 4h4v4H4zM12 4h4v4h-4zM8 8h4v4H8zM12 12h4v4h-4zM16 16h4v4h-4z"/></svg>
+      <span>Snake</span>
+    </div>
+    <div class="icon" onclick="openApp('game', 'breakout')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#e50914" stroke-width="2"><rect x="4" y="4" width="16" height="4"/><rect x="6" y="10" width="12" height="4"/><circle cx="12" cy="18" r="2"/></svg>
+      <span>Breakout</span>
+    </div>
+    <div class="icon" onclick="openApp('game', 'tetris')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#ff9900" stroke-width="2"><path d="M4 4h6v6H4zM10 10h6v6h-6zM4 16h6v4H4zM16 4h4v4h-4z"/></svg>
+      <span>Tetris</span>
+    </div>
+    <div class="icon" onclick="openApp('game', '2048')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#f26522" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <span>2048</span>
+    </div>
+    <div class="icon" onclick="openApp('settings')">
       <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span>Settings</span>
+    </div>
+  </div>
+
+  <div class="taskbar-container">
+    <div class="taskbar">
+      <div class="task-icon" onclick="openApp('game', 'pong')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#107c10" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4m4 0h4"/></svg>
+      </div>
+      <div class="task-icon" onclick="openApp('game', 'snake')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#007acc" stroke-width="2"><path d="M4 4h4v4H4zM12 4h4v4h-4zM8 8h4v4H8zM12 12h4v4h-4zM16 16h4v4h-4z"/></svg>
+      </div>
+      <div class="task-icon" onclick="openApp('game', 'breakout')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#e50914" stroke-width="2"><rect x="4" y="4" width="16" height="4"/><rect x="6" y="10" width="12" height="4"/><circle cx="12" cy="18" r="2"/></svg>
+      </div>
+      <div class="task-icon" onclick="openApp('game', 'tetris')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#ff9900" stroke-width="2"><path d="M4 4h6v6H4zM10 10h6v6h-6zM4 16h6v4H4zM16 4h4v4h-4z"/></svg>
+      </div>
+      <div class="task-icon" onclick="openApp('game', '2048')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#f26522" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      </div>
+      <div class="task-separator"></div>
+      <div class="task-icon" onclick="openApp('settings')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="window" id="settingsWindow" style="top: 10%; left: 35%; transform: none; margin-top:20px;">
+    <div class="win-header" id="settingsHeader">
+      <div class="win-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </div>
+      <div class="win-controls">
+        <button class="win-btn close" onclick="closeApp('settingsWindow')">x</button>
+      </div>
+    </div>
+    <div class="win-body">
+      <div class="settings-sidebar">
+        <div class="settings-tab" onclick="switchTab('appearance', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20 10 10 0 0 1 0-20z"/><path d="M12 2v20"/></svg>
+          Appearance
+        </div>
+        <div class="settings-tab on" onclick="switchTab('stealth', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Stealth
+        </div>
+        <div class="settings-tab" onclick="switchTab('panic', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg>
+          Panic Key
+        </div>
+      </div>
+      <div class="settings-content">
+        <div id="tab-appearance" style="display:none">
+          <h2>Appearance</h2>
+          <p class="sub">Customize how SerumOS looks.</p>
+          <div class="settings-group">
+            <h3>Accent color</h3>
+            <div style="display:flex; gap:12px;">
+              <div style="width:32px;height:32px;border-radius:50%;background:#f7d466;cursor:pointer;border:2px solid #fff;" onclick="setAccent('#f7d466', this)"></div>
+              <div style="width:32px;height:32px;border-radius:50%;background:#c9f24e;cursor:pointer;" onclick="setAccent('#c9f24e', this)"></div>
+              <div style="width:32px;height:32px;border-radius:50%;background:#7cc4ff;cursor:pointer;" onclick="setAccent('#7cc4ff', this)"></div>
+              <div style="width:32px;height:32px;border-radius:50%;background:#ff8fc7;cursor:pointer;" onclick="setAccent('#ff8fc7', this)"></div>
+              <div style="width:32px;height:32px;border-radius:50%;background:#b48bff;cursor:pointer;" onclick="setAccent('#b48bff', this)"></div>
+            </div>
+          </div>
+          <div class="settings-group">
+            <h3>Wallpaper</h3>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+              <div style="aspect-ratio:16/9;background:url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop') center/cover;border-radius:8px;cursor:pointer;border:2px solid #fff;" onclick="setWall('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop', this)"></div>
+              <div style="aspect-ratio:16/9;background:url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2564&auto=format&fit=crop') center/cover;border-radius:8px;cursor:pointer;" onclick="setWall('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2564&auto=format&fit=crop', this)"></div>
+              <div style="aspect-ratio:16/9;background:url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2564&auto=format&fit=crop') center/cover;border-radius:8px;cursor:pointer;" onclick="setWall('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2564&auto=format&fit=crop', this)"></div>
+            </div>
+          </div>
+        </div>
+        <div id="tab-stealth" style="display:block">
+          <h2>Stealth</h2>
+          <p class="sub">Hide SerumOS in plain sight.</p>
+          <div class="settings-group">
+            <h3>Tab Cloak</h3>
+            <div class="settings-row">
+              <div class="settings-label">Swap the browser tab's title and favicon to look like a school tool.</div>
+            </div>
+            <div class="select-wrapper">
+              <select id="cloakSelect" onchange="applyCloak()">
+                <option value="none">None</option>
+                <option value="google">Google</option>
+                <option value="classroom">Google Classroom</option>
+                <option value="docs" selected>Google Docs</option>
+                <option value="drive">Google Drive</option>
+                <option value="slides">Google Slides</option>
+                <option value="canvas">Canvas</option>
+                <option value="schoology">Schoology</option>
+                <option value="khan">Khan Academy</option>
+                <option value="quizlet">Quizlet</option>
+                <option value="edpuzzle">Edpuzzle</option>
+                <option value="clever">Clever</option>
+                <option value="ixl">IXL</option>
+                <option value="wikipedia">Wikipedia</option>
+              </select>
+            </div>
+          </div>
+          <div class="settings-group">
+            <h3>Open in about:blank</h3>
+            <div class="settings-row">
+              <div class="settings-label">Pop SerumOS into a blank tab.</div>
+              <button class="btn" onclick="cloak()">Decoy URL</button>
+            </div>
+          </div>
+          <div class="settings-group">
+            <h3>Fake Address Bar</h3>
+            <div class="settings-row">
+              <div class="settings-label">Show a fake browser chrome at the top.</div>
+              <div class="switch on" id="fakeBarSwitch" onclick="toggleFakeBar()"></div>
+            </div>
+          </div>
+        </div>
+        <div id="tab-panic" style="display:none">
+          <h2>Panic Key</h2>
+          <p class="sub">Instantly redirect to Google Classroom.</p>
+          <div class="settings-group">
+            <div class="settings-row">
+              <div class="settings-label">Press the <b>Escape</b> key or <b>Ctrl+Shift+X</b> at any time to trigger the panic screen.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="window" id="gameWindow" style="width: 900px; height: 700px;">
+    <div class="win-header" id="gameHeader">
+      <div class="win-title" id="gameTitle">Game</div>
+      <div class="win-controls">
+        <button class="win-btn close" onclick="closeApp('gameWindow')">x</button>
+      </div>
+    </div>
+    <div class="game-container">
+      <div class="loader" id="gameLoader"><div class="spinner"></div></div>
+      <iframe class="game-frame" id="gameFrame" allowfullscreen></iframe>
     </div>
   </div>
 </div>
-
-<div class="window" id="settingsWindow">
-  <div class="win-header">
-    <div class="win-title">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      Settings
-    </div>
-    <div class="win-controls">
-      <button class="win-btn min" onclick="closeApp('settingsWindow')">-</button>
-      <button class="win-btn max" onclick="closeApp('settingsWindow')">+</button>
-      <button class="win-btn close" onclick="closeApp('settingsWindow')">x</button>
-    </div>
-  </div>
-  <div class="win-body">
-    <div class="settings-sidebar">
-      <div class="settings-tab on" onclick="switchSettingsTab('appearance', this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20 10 10 0 0 1 0-20z"/><path d="M12 2v20"/></svg>
-        Appearance
-      </div>
-      <div class="settings-tab" onclick="switchSettingsTab('stealth', this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Stealth
-      </div>
-      <div class="settings-tab" onclick="switchSettingsTab('panic', this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg>
-        Panic Key
-      </div>
-    </div>
-    
-    <div class="settings-content">
-      <div id="tab-appearance">
-        <h2>Appearance</h2>
-        <p class="sub">Customize how SerumOS looks.</p>
-        
-        <div class="settings-group">
-          <h3>Accent color</h3>
-          <div style="display:flex; gap:12px;">
-            <div style="width:32px;height:32px;border-radius:50%;background:#f7d466;cursor:pointer;border:2px solid #fff;" onclick="setAccent('#f7d466')"></div>
-            <div style="width:32px;height:32px;border-radius:50%;background:#c9f24e;cursor:pointer;" onclick="setAccent('#c9f24e')"></div>
-            <div style="width:32px;height:32px;border-radius:50%;background:#7cc4ff;cursor:pointer;" onclick="setAccent('#7cc4ff')"></div>
-            <div style="width:32px;height:32px;border-radius:50%;background:#ff8fc7;cursor:pointer;" onclick="setAccent('#ff8fc7')"></div>
-            <div style="width:32px;height:32px;border-radius:50%;background:#b48bff;cursor:pointer;" onclick="setAccent('#b48bff')"></div>
-          </div>
-        </div>
-
-        <div class="settings-group">
-          <h3>Wallpaper</h3>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
-            <div style="aspect-ratio:16/9;background:url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop') center/cover;border-radius:8px;cursor:pointer;border:2px solid #fff;" onclick="setWall('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop')"></div>
-            <div style="aspect-ratio:16/9;background:url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2564&auto=format&fit=crop') center/cover;border-radius:8px;cursor:pointer;" onclick="setWall('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2564&auto=format&fit=crop')"></div>
-            <div style="aspect-ratio:16/9;background:url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2564&auto=format&fit=crop') center/cover;border-radius:8px;cursor:pointer;" onclick="setWall('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2564&auto=format&fit=crop')"></div>
-          </div>
-        </div>
-      </div>
-
-      <div id="tab-stealth" style="display:none">
-        <h2>Stealth</h2>
-        <p class="sub">Hide SerumOS in plain sight.</p>
-
-        <div class="settings-group">
-          <h3>Tab Cloak</h3>
-          <div class="settings-row">
-            <div class="settings-label">Swap the browser tab's title and favicon to look like a school tool.</div>
-          </div>
-          <div class="select-wrapper">
-            <select id="cloakSelect" style="width:100%" onchange="applyCloak()">
-              <option value="none">None</option>
-              <option value="docs" selected>Google Docs</option>
-              <option value="classroom">Google Classroom</option>
-              <option value="drive">Google Drive</option>
-              <option value="canvas">Canvas</option>
-              <option value="wikipedia">Wikipedia</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="settings-group">
-          <h3>Open in about:blank</h3>
-          <div class="settings-row">
-            <div class="settings-label">Pop SerumOS into a blank tab.</div>
-            <button onclick="cloak()" style="background:var(--panel-solid);border:1px solid var(--line);color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:var(--font)">Decoy URL</button>
-          </div>
-        </div>
-
-        <div class="settings-group">
-          <h3>Fake Address Bar</h3>
-          <div class="settings-row">
-            <div class="settings-label">Show a fake browser chrome at the top.</div>
-            <div class="switch" id="fakeBarSwitch" onclick="toggleFakeBar()"></div>
-          </div>
-        </div>
-      </div>
-
-      <div id="tab-panic" style="display:none">
-        <h2>Panic Key</h2>
-        <p class="sub">Instantly redirect to Google Classroom.</p>
-        <div class="settings-group">
-          <div class="settings-row">
-            <div class="settings-label">Press the <b>Escape</b> key or <b>Ctrl+Shift+X</b> at any time to trigger the panic screen.</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<div class="window" id="gameWindow">
-  <div class="win-header">
-    <div class="win-title" id="gameTitle">Game</div>
-    <div class="win-controls">
-      <button class="win-btn min" onclick="closeApp('gameWindow')">-</button>
-      <button class="win-btn max" onclick="closeApp('gameWindow')">+</button>
-      <button class="win-btn close" onclick="closeApp('gameWindow')">x</button>
-    </div>
-  </div>
-  <div class="game-container">
-    <div class="loader" id="gameLoader"><div class="spinner"></div></div>
-    <iframe class="game-frame" id="gameFrame" allowfullscreen></iframe>
-  </div>
-</div>
-
-<div class="toast" id="toast">Settings saved</div>
 
 <script>
+const GAMES = {
+  pong: `<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0;background:#0a0b0d;display:flex;justify-content:center;align-items:center;height:100vh;overflow:hidden;touch-action:none}canvas{max-width:100%;max-height:100%;image-rendering:pixelated}</style></head><body><canvas id="c"></canvas><script>const W=520,H=420,cv=document.getElementById('c'),ctx=cv.getContext('2d');cv.width=W;cv.height=H;const PH=74,PW=9;let py,ay,bx,by,bvx,bvy,ps,as,over;function serve(d){bx=W/2;by=H/2;const a=Math.random()*.7-.35;bvx=d*4.4;bvy=a*4.4}function reset(){py=ay=H/2-PH/2;ps=as=0;over=false;serve(1)}addEventListener('keydown',e=>{if(e.key==='ArrowUp')py-=32;if(e.key==='ArrowDown')py+=32;if(e.key===' '&&over)reset()});cv.addEventListener('mousemove',e=>{const r=cv.getBoundingClientRect();py=(e.clientY-r.top)*(H/r.height)-PH/2});cv.addEventListener('touchmove',e=>{const r=cv.getBoundingClientRect();py=(e.touches[0].clientY-r.top)*(H/r.height)-PH/2;e.preventDefault()},{passive:false});function tick(){if(over)return;py=Math.max(0,Math.min(H-PH,py));const target=by-PH/2+(bvy>0?12:-12);ay+=Math.max(-4.1,Math.min(4.1,(target-ay)*.11));ay=Math.max(0,Math.min(H-PH,ay));bx+=bvx;by+=bvy;if(by<6){by=6;bvy*=-1}if(by>H-6){by=H-6;bvy*=-1}if(bvx<0&&bx<24+PW&&bx>20&&by>py&&by<py+PH){bvx=Math.abs(bvx)*1.04;bvy+=(by-(py+PH/2))*.09}if(bvx>0&&bx>W-24-PW&&bx<W-20&&by>ay&&by<ay+PH){bvx=-Math.abs(bvx)*1.04;bvy+=(by-(ay+PH/2))*.09}if(bx<0){as++;serve(1)}if(bx>W){ps++;serve(-1)}if(ps>=7||as>=7)over=true}function draw(){ctx.fillStyle='#0a0b0d';ctx.fillRect(0,0,W,H);ctx.strokeStyle='#1b2026';ctx.lineWidth=2;ctx.setLineDash([7,11]);ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#c9f24e';ctx.fillRect(20,py,PW,PH);ctx.fillStyle='#ff7a7a';ctx.fillRect(W-20-PW,ay,PW,PH);ctx.fillStyle='#e9ece6';ctx.beginPath();ctx.arc(bx,by,7,0,7);ctx.fill();ctx.fillStyle='#e9ece6';ctx.font='bold 30px monospace';ctx.textAlign='center';ctx.fillText(ps+'  '+as,W/2,40);if(over){ctx.fillStyle='rgba(0,0,0,.74)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#e9ece6';ctx.font='bold 20px monospace';ctx.fillText(ps>as?'YOU WIN':'YOU LOSE',W/2,H/2-10);ctx.fillStyle='#868c93';ctx.font='12px monospace';ctx.fillText('space to restart',W/2,H/2+16)}}(function l(){tick();draw();requestAnimationFrame(l)})();reset();<\/script></body></html>`,
+  snake: `<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0;background:#0a0b0d;display:flex;justify-content:center;align-items:center;height:100vh;overflow:hidden;touch-action:none}canvas{max-width:100%;max-height:100%;image-rendering:pixelated}</style></head><body><canvas id="c"></canvas><script>const N=20,S=24,cv=document.getElementById('c'),ctx=cv.getContext('2d');cv.width=cv.height=N*S;let sn,dir,nd,food,score,dead,acc,last,step,hi=+(localStorage.snk||0);function place(){do{food={x:Math.random()*N|0,y:Math.random()*N|0}}while(sn.some(s=>s.x===food.x&&s.y===food.y))}function reset(){sn=[{x:8,y:10},{x:7,y:10},{x:6,y:10}];dir={x:1,y:0};nd=null;score=0;dead=false;acc=0;last=0;step=130;place()}function step1(){if(nd){dir=nd;nd=null}const h={x:sn[0].x+dir.x,y:sn[0].y+dir.y};if(h.x<0||h.y<0||h.x>=N||h.y>=N||sn.some(s=>s.x===h.x&&s.y===h.y)){dead=true;if(score>hi){hi=score;localStorage.snk=hi}return}sn.unshift(h);if(h.x===food.x&&h.y===food.y){score++;step=Math.max(62,step-3);place()}else sn.pop()}function draw(){ctx.fillStyle='#0a0b0d';ctx.fillRect(0,0,cv.width,cv.height);ctx.fillStyle='#161a1f';for(let i=0;i<N;i++)for(let j=0;j<N;j++)if((i+j)&1)ctx.fillRect(i*S,j*S,S,S);ctx.fillStyle='#ffb03a';ctx.fillRect(food.x*S+4,food.y*S+4,S-8,S-8);sn.forEach((s,i)=>{ctx.fillStyle=i?'#7fae2e':'#c9f24e';ctx.fillRect(s.x*S+1,s.y*S+1,S-2,S-2)});ctx.fillStyle='#868c93';ctx.font='bold 16px monospace';ctx.fillText('SCORE: '+score,10,25);if(dead){ctx.fillStyle='rgba(0,0,0,.74)';ctx.fillRect(0,0,cv.width,cv.height);ctx.textAlign='center';ctx.fillStyle='#e9ece6';ctx.font='bold 21px monospace';ctx.fillText('GAME OVER',cv.width/2,cv.height/2-10);ctx.fillStyle='#868c93';ctx.font='12px monospace';ctx.fillText('score '+score+' - best '+hi,cv.width/2,cv.height/2+16);ctx.fillText('space to restart',cv.width/2,cv.height/2+40)}}function loop(t){if(!last)last=t;acc+=t-last;last=t;if(!dead&&acc>=step){acc=0;step1()}draw();requestAnimationFrame(loop)}addEventListener('keydown',e=>{if(dead&&e.key===' '){reset();return}const m={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0],w:[0,-1],s:[0,1],a:[-1,0],d:[1,0]}[e.key];if(m){e.preventDefault();if(!(m[0]===-dir.x&&m[1]===-dir.y))nd={x:m[0],y:m[1]}}});let tx,ty;addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)<18&&Math.abs(dy)<18)return;const m=Math.abs(dx)>Math.abs(dy)?[Math.sign(dx),0]:[0,Math.sign(dy)];if(!(m[0]===-dir.x&&m[1]===-dir.y))nd={x:m[0],y:m[1]}},{passive:true});reset();requestAnimationFrame(loop);<\/script></body></html>`,
+  breakout: `<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0;background:#0a0b0d;display:flex;justify-content:center;align-items:center;height:100vh;overflow:hidden;touch-action:none}canvas{max-width:100%;max-height:100%;image-rendering:pixelated}</style></head><body><canvas id="c"></canvas><script>const W=480,H=560,cv=document.getElementById('c'),ctx=cv.getContext('2d');cv.width=W;cv.height=H;const COLS=8,ROWS=5,BW=W/COLS-6,BH=18,TOP=70;let px,pw=78,balls,bricks,score,lives,over,win;function reset(){px=W/2;pw=78;balls=[{x:W/2,y:H-70,vx:2.6,vy:-4.2,r:6}];bricks=[];for(let r=0;r<ROWS;r++)for(let k=0;k<COLS;k++)bricks.push({x:6+k*(BW+6),y:TOP+r*(BH+6),hp:1+((r>2)?1:0)});score=0;lives=3;over=false;win=false}addEventListener('keydown',e=>{if(e.key==='ArrowLeft')px-=38;if(e.key==='ArrowRight')px+=38;if(e.key===' '&&over)reset()});cv.addEventListener('mousemove',e=>{const r=cv.getBoundingClientRect();px=(e.clientX-r.left)*(W/r.width)});cv.addEventListener('touchmove',e=>{const r=cv.getBoundingClientRect();px=(e.touches[0].clientX-r.left)*(W/r.width);e.preventDefault()},{passive:false});function tick(){if(over)return;px=Math.max(pw/2,Math.min(W-pw/2,px));for(const b of balls){b.x+=b.vx;b.y+=b.vy;if(b.x<b.r){b.x=b.r;b.vx*=-1}if(b.x>W-b.r){b.x=W-b.r;b.vx*=-1}if(b.y<b.r){b.y=b.r;b.vy*=-1}if(b.y>H-40&&b.y<H-24&&b.x>px-pw/2&&b.x<px+pw/2&&b.vy>0){b.vy=-Math.abs(b.vy);b.vx=(b.x-px)/pw*5.4;b.vy*=.99}for(const k of bricks){if(k.hp>0&&b.x>k.x-b.r&&b.x<k.x+BW+b.r&&b.y>k.y-b.r&&b.y<k.y+BH+b.r){k.hp--;b.vy*=-1;score+=10;break}}if(b.y>H+20){lives--;if(lives<=0){over=true;win=false}else{b.x=W/2;b.y=H-70;b.vx=2.6*(Math.random()<.5?-1:1);b.vy=-4.2}}}bricks=bricks.filter(k=>k.hp>0);if(!bricks.length){over=true;win=true}}function draw(){ctx.fillStyle='#0a0b0d';ctx.fillRect(0,0,W,H);for(const k of bricks){ctx.fillStyle=k.hp>1?'#7fae2e':'#c9f24e';ctx.fillRect(k.x,k.y,BW,BH);ctx.fillStyle='rgba(0,0,0,.18)';ctx.fillRect(k.x,k.y+BH-4,BW,4)}ctx.fillStyle='#e9ece6';ctx.fillRect(px-pw/2,H-38,pw,9);ctx.fillStyle='#c9f24e';for(const b of balls){ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,7);ctx.fill()}ctx.fillStyle='#868c93';ctx.font='11px monospace';ctx.textAlign='left';ctx.fillText('SCORE '+score,12,26);ctx.fillText('LIVES '+lives,12,42);if(over){ctx.fillStyle='rgba(0,0,0,.74)';ctx.fillRect(0,0,W,H);ctx.textAlign='center';ctx.fillStyle='#e9ece6';ctx.font='bold 21px monospace';ctx.fillText(win?'CLEARED':'GAME OVER',W/2,H/2-8);ctx.fillStyle='#868c93';ctx.font='12px monospace';ctx.fillText('score '+score,W/2,H/2+18);ctx.fillText('space to restart',W/2,H/2+42)}}(function loop(){tick();draw();requestAnimationFrame(loop)})();reset();<\/script></body></html>`,
+  tetris: `<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0;background:#0a0b0d;display:flex;justify-content:center;align-items:center;height:100vh;overflow:hidden;touch-action:none}canvas{max-width:100%;max-height:100%;image-rendering:pixelated}</style></head><body><canvas id="c"></canvas><script>const CW=10,CH=20,S=26,cv=document.getElementById('c'),ctx=cv.getContext('2d');cv.width=CW*S;cv.height=CH*S;const SHAPES=[[[1,1,1,1]],[[1,1],[1,1]],[[0,1,0],[1,1,1]],[[1,0,0],[1,1,1]],[[0,0,1],[1,1,1]],[[0,1,1],[1,1,0]],[[1,1,0],[0,1,1]]];const COLORS=['#c9f24e','#ffb03a','#8bd3ff','#b48bff','#ff7a7a','#7fe6c0','#ffd166'];let grid,cur,px,py,rot,score,lines,over,drop,last,acc;function newPiece(){const i=Math.random()*SHAPES.length|0;cur=SHAPES[i];rot=0;px=CW/2-1|0;py=0;if(hit(px,py,cur))over=true}function cells(px,py,sh){const o=[];sh.forEach((r,y)=>r.forEach((v,x)=>{if(v)o.push([px+x,py+y])}));return o}function hit(nx,ny,sh){return cells(nx,ny,sh).some(([x,y])=>x<0||x>=CW||y>=CH||(y>=0&&grid[y][x]))}function lock(){cells(px,py,cur).forEach(([x,y])=>{if(y>=0)grid[y][x]=1});const full=grid.map((r,i)=>r.every(Boolean)?i:-1).filter(i=>i>=0);full.forEach(i=>{grid.splice(i,1);grid.unshift(Array(CW).fill(0));lines++});if(full.length){score+=full.length*100}newPiece()}function rotate(){const t=cur[0].map((_,i)=>cur.map(r=>r[i]).reverse());if(!hit(px,py,t))cur=t}function reset(){grid=Array.from({length:CH},()=>Array(CW).fill(0));score=0;lines=0;over=false;drop=800;last=0;acc=0;newPiece()}function draw(){ctx.fillStyle='#0a0b0d';ctx.fillRect(0,0,cv.width,cv.height);ctx.strokeStyle='#14181c';for(let i=1;i<CW;i++){ctx.beginPath();ctx.moveTo(i*S,0);ctx.lineTo(i*S,cv.height);ctx.stroke()}for(let j=1;j<CH;j++){ctx.beginPath();ctx.moveTo(0,j*S);ctx.lineTo(cv.width,j*S);ctx.stroke()}grid.forEach((r,y)=>r.forEach((v,x)=>{if(v){ctx.fillStyle='#5c7a1e';ctx.fillRect(x*S+1,y*S+1,S-2,S-2)}}));cells(px,py,cur).forEach(([x,y],i)=>{if(y>=0){ctx.fillStyle='#c9f24e';ctx.fillRect(x*S+1,y*S+1,S-2,S-2)}});ctx.fillStyle='#868c93';ctx.font='11px monospace';ctx.fillText('SCORE '+score,8,18);if(over){ctx.fillStyle='rgba(0,0,0,.76)';ctx.fillRect(0,0,cv.width,cv.height);ctx.textAlign='center';ctx.fillStyle='#e9ece6';ctx.font='bold 18px monospace';ctx.fillText('GAME OVER',cv.width/2,cv.height/2-6);ctx.fillStyle='#868c93';ctx.font='11px monospace';ctx.fillText('space to restart',cv.width/2,cv.height/2+18)}}function loop(t){if(!last)last=t;acc+=t-last;last=t;if(!over&&acc>=drop){acc=0;if(hit(px,py+1,cur))lock();else py++}draw();requestAnimationFrame(loop)}addEventListener('keydown',e=>{if(over&&e.key===' '){reset();return}if(e.key==='ArrowLeft'&&!hit(px-1,py,cur))px--;else if(e.key==='ArrowRight'&&!hit(px+1,py,cur))px++;else if(e.key==='ArrowDown'){if(hit(px,py+1,cur))lock();else py++}else if(e.key==='ArrowUp')rotate();else if(e.key===' '){e.preventDefault();while(!hit(px,py+1,cur))py++;lock()}else return;e.preventDefault()});reset();requestAnimationFrame(loop);<\/script></body></html>`,
+  '2048': `<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0;background:#0a0b0d;display:flex;justify-content:center;align-items:center;height:100vh;overflow:hidden;touch-action:none}canvas{max-width:100%;max-height:100%;image-rendering:pixelated}</style></head><body><canvas id="c"></canvas><script>const N=4,S=104,G=10,cv=document.getElementById('c'),ctx=cv.getContext('2d');cv.width=cv.height=N*S+G*(N+1);let g,score,over,won;const COL={2:'#2a2f36',4:'#343a42',8:'#4a5a2a',16:'#65802c',32:'#82a231',64:'#a3c93a',128:'#c9f24e',256:'#d9ff62',512:'#ffd166',1024:'#ffb03a',2048:'#ff8f3a'};function add(){const free=[];g.forEach((r,y)=>r.forEach((v,x)=>{if(!v)free.push([x,y])}));if(!free.length)return;const [x,y]=free[Math.random()*free.length|0];g[y][x]=Math.random()<.9?2:4}function reset(){g=Array.from({length:N},()=>Array(N).fill(0));score=0;over=false;won=false;add();add()}function slide(row){const a=row.filter(v=>v);for(let i=0;i<a.length-1;i++)if(a[i]===a[i+1]){a[i]*=2;score+=a[i];a.splice(i+1,1)}while(a.length<N)a.push(0);return a}function move(dir){const before=JSON.stringify(g);if(dir==='l')g=g.map(r=>slide(r));if(dir==='r')g=g.map(r=>slide(r.slice().reverse()).reverse());if(dir==='u'||dir==='d'){for(let x=0;x<N;x++){let col=g.map(r=>r[x]);if(dir==='d')col=col.reverse();col=slide(col);if(dir==='d')col=col.reverse();col.forEach((v,y)=>g[y][x]=v)}}if(JSON.stringify(g)!==before){add();if(g.flat().includes(2048))won=true;if(!canMove())over=true}}function canMove(){if(g.flat().includes(0))return true;for(let y=0;y<N;y++)for(let x=0;x<N;x++){if(x<N-1&&g[y][x]===g[y][x+1])return true;if(y<N-1&&g[y][x]===g[y+1][x])return true}return false}function draw(){ctx.fillStyle='#0a0b0d';ctx.fillRect(0,0,cv.width,cv.height);g.forEach((r,y)=>r.forEach((v,x)=>{const X=G+x*(S+G),Y=G+y*(S+G);ctx.fillStyle=v?COL[v]||'#e9ece6':'#171a1e';ctx.fillRect(X,Y,S,S);if(v){ctx.fillStyle=v>4?'#0a0b0d':'#e9ece6';ctx.font='bold '+(v>999?26:v>99?32:38)+'px ui-monospace,monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(v,X+S/2,Y+S/2+2)}}));if(over||won){ctx.fillStyle='rgba(0,0,0,.76)';ctx.fillRect(0,0,cv.width,cv.height);ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#e9ece6';ctx.font='bold 26px ui-monospace,monospace';ctx.fillText(won?'2048':'GAME OVER',cv.width/2,cv.height/2-14);ctx.fillStyle='#868c93';ctx.font='12px ui-monospace,monospace';ctx.fillText('space to restart',cv.width/2,cv.height/2+22)}}const K={ArrowLeft:'l',ArrowRight:'r',ArrowUp:'u',ArrowDown:'d',a:'l',d:'r',w:'u',s:'d'};addEventListener('keydown',e=>{if(e.key===' '&&(over||won)){reset();return}const d=K[e.key];if(!d)return;e.preventDefault();move(d)});let tx,ty;addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)<24&&Math.abs(dy)<24)return;move(Math.abs(dx)>Math.abs(dy)?(dx>0?'r':'l'):(dy>0?'d':'u'))},{passive:true});reset();(function l(){draw();requestAnimationFrame(l)})();<\/script></body></html>`
+};
+
 function updateClock() {
   const now = new Date();
   document.getElementById('clockDisplay').textContent = now.toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'});
@@ -410,16 +381,27 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-function openApp(type, url, title) {
+function enterOS() {
+  document.getElementById('welcome-screen').style.display = 'none';
+  document.getElementById('os').classList.add('on');
+}
+
+function openApp(type, gameId) {
   if (type === 'settings') {
     document.getElementById('settingsWindow').classList.add('on');
   } else if (type === 'game') {
-    document.getElementById('gameTitle').textContent = title;
+    const titles = { pong: 'Pong', snake: 'Snake', breakout: 'Breakout', tetris: 'Tetris', '2048': '2048' };
+    document.getElementById('gameTitle').textContent = titles[gameId] || 'Game';
     const loader = document.getElementById('gameLoader');
     const frame = document.getElementById('gameFrame');
     loader.classList.remove('off');
-    frame.src = url;
-    frame.onload = () => loader.classList.add('off');
+    
+    frame.srcdoc = GAMES[gameId] || '<h1 style="color:#fff;font-family:sans-serif;text-align:center;margin-top:20vh;">Game not found</h1>';
+    
+    setTimeout(() => {
+      loader.classList.add('off');
+    }, 500);
+
     document.getElementById('gameWindow').classList.add('on');
   }
 }
@@ -427,28 +409,28 @@ function openApp(type, url, title) {
 function closeApp(id) {
   document.getElementById(id).classList.remove('on');
   if (id === 'gameWindow') {
-    setTimeout(() => { document.getElementById('gameFrame').src = 'about:blank'; }, 300);
+    setTimeout(() => { document.getElementById('gameFrame').srcdoc = ''; }, 300);
   }
 }
 
-function switchSettingsTab(tab, el) {
+function switchTab(tab, el) {
   document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('on'));
   el.classList.add('on');
   document.querySelectorAll('.settings-content > div').forEach(d => d.style.display = 'none');
   document.getElementById('tab-' + tab).style.display = 'block';
 }
 
-function setAccent(color) {
+function setAccent(color, el) {
   document.documentElement.style.setProperty('--acc', color);
-  document.documentElement.style.setProperty('--acc-bg', color + '26'); // 15% opacity hex
-  document.querySelectorAll('.settings-content [style*="border: 2px solid #fff"]').forEach(el => el.style.border = 'none');
-  event.target.style.border = '2px solid #fff';
+  document.documentElement.style.setProperty('--acc-bg', color + '26');
+  document.querySelectorAll('.settings-content [style*="border: 2px solid #fff"]').forEach(n => n.style.border = 'none');
+  el.style.border = '2px solid #fff';
 }
 
-function setWall(url) {
+function setWall(url, el) {
   document.documentElement.style.setProperty('--wallpaper', `url('${url}') center/cover no-repeat`);
-  document.querySelectorAll('.settings-content [style*="border: 2px solid #fff"]').forEach(el => el.style.border = 'none');
-  event.target.style.border = '2px solid #fff';
+  document.querySelectorAll('.settings-content [style*="border: 2px solid #fff"]').forEach(n => n.style.border = 'none');
+  el.style.border = '2px solid #fff';
 }
 
 function toggleFakeBar() {
@@ -457,10 +439,10 @@ function toggleFakeBar() {
   sw.classList.toggle('on');
   if (sw.classList.contains('on')) {
     bar.classList.add('on');
-    document.querySelector('.topbar').style.top = '44px';
+    document.getElementById('topbar').style.top = '44px';
   } else {
     bar.classList.remove('on');
-    document.querySelector('.topbar').style.top = '0';
+    document.getElementById('topbar').style.top = '0';
   }
 }
 
@@ -473,14 +455,21 @@ function applyCloak() {
 
   const configs = {
     docs: { t: 'Untitled document - Google Docs', f: 'https://ssl.gstatic.com/docs/documents/images/kix-favicon7.ico', u: '<b>docs.google.com</b>/document/d/1a2B3c4D5e6F7g8H9i0J/edit' },
+    google: { t: 'Google', f: 'https://www.google.com/favicon.ico', u: '<b>google.com</b>' },
     classroom: { t: 'Classes', f: 'https://ssl.gstatic.com/classroom/favicon.png', u: '<b>classroom.google.com</b>/h' },
     drive: { t: 'My Drive - Google Drive', f: 'https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png', u: '<b>drive.google.com</b>/drive/my-drive' },
+    slides: { t: 'Untitled presentation - Google Slides', f: 'https://ssl.gstatic.com/docs/presentations/images/favicon5.ico', u: '<b>docs.google.com</b>/presentation/d/1a2B3c4D5e6F7g8H9i0J/edit' },
     canvas: { t: 'Dashboard', f: 'https://du11hjcvx0uqb.cloudfront.net/dist/images/favicon-e10d657a73.ico', u: '<b>canvas.instructure.com</b>/dashboard' },
+    schoology: { t: 'Schoology', f: 'https://asset-cdn.schoology.com/sites/all/themes/schoology_theme/favicon.ico', u: '<b>app.schoology.com</b>/home' },
+    khan: { t: 'Khan Academy', f: 'https://cdn.kastatic.org/images/favicon.ico', u: '<b>khanacademy.org</b>/' },
+    quizlet: { t: 'Quizlet', f: 'https://assets.quizlet.com/a/j/dist/app/i/quizlet.ico', u: '<b>quizlet.com</b>/' },
+    edpuzzle: { t: 'Edpuzzle', f: 'https://edpuzzle.imgix.net/favicon.ico', u: '<b>edpuzzle.com</b>/assignments' },
+    clever: { t: 'Clever | Portal', f: 'https://assets.clever.com/favicon.ico', u: '<b>clever.com</b>/in/portal' },
+    ixl: { t: 'IXL | Math, Language Arts, Science, Social Studies, and Spanish', f: 'https://www.ixl.com/favicon.ico', u: '<b>ixl.com</b>/dashboard' },
     wikipedia: { t: 'Wikipedia, the free encyclopedia', f: 'https://en.wikipedia.org/static/favicon/wikipedia.ico', u: '<b>en.wikipedia.org</b>/wiki/Main_Page' },
-    none: { t: 'SerumOS', f: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'12\' fill=\'%23ffb03a\'/%3E%3C/svg%3E', u: '<b>localhost</b>/index.html' }
+    none: { t: 'SerumOS', f: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'12\' fill=\'%23f7d466\'/%3E%3C/svg%3E', u: '<b>localhost</b>/index.html' }
   };
-
-  const c = configs[val];
+  const c = configs[val] || configs.none;
   title.textContent = c.t;
   favicon.href = c.f;
   fakeFavicon.src = c.f;
@@ -491,7 +480,7 @@ function applyCloak() {
 function panic() {
   document.body.style.background = '#fff';
   document.body.innerHTML = '<div style="display:flex;height:100vh;align-items:center;justify-content:center;color:#000;font-family:sans-serif;font-size:24px;">Redirecting to Classroom...</div>';
-  setTimeout(() => { window.location.href = 'https://classroom.google.com/h'; }, 1000);
+  setTimeout(() => { window.location.href = 'https://classroom.google.com/h'; }, 800);
 }
 
 document.addEventListener('keydown', (e) => {
@@ -506,11 +495,38 @@ function cloak() {
   w.document.open(); w.document.write(html); w.document.close();
 }
 
-applyCloak();
-document.getElementById('fakeBarSwitch').classList.add('on');
-document.getElementById('fakeBar').classList.add('on');
-document.querySelector('.topbar').style.top = '44px';
+function makeDraggable(el, handle) {
+  let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  handle.onmousedown = dragMouseDown;
+  function dragMouseDown(e) {
+    if (e.target.tagName === 'BUTTON') return;
+    e.preventDefault();
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    document.onmousemove = elementDrag;
+  }
+  function elementDrag(e) {
+    e.preventDefault();
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    el.style.top = (el.offsetTop - pos2) + "px";
+    el.style.left = (el.offsetLeft - pos1) + "px";
+    el.style.transform = "none";
+    el.style.margin = "0";
+  }
+  function closeDragElement() {
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
 
+makeDraggable(document.getElementById('settingsWindow'), document.getElementById('settingsHeader'));
+makeDraggable(document.getElementById('gameWindow'), document.getElementById('gameHeader'));
+
+applyCloak();
 </script>
 </body>
 </html>
