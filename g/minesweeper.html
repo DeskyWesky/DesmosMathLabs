@@ -1,1 +1,55 @@
-
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>Untitled document - Google Docs</title>
+<link rel="icon" href="../assets/doc.svg"><link rel="stylesheet" href="../assets/play.css">
+<style>
+#b{display:grid;gap:2px;background:#171a1e;padding:6px}
+.c{width:34px;height:34px;display:grid;place-items:center;background:#242a31;color:#e9e9e4;
+ font:bold 15px ui-monospace,monospace;cursor:pointer;user-select:none}
+.c:hover{background:#2e353d}
+.c.o{background:#131619;color:#868c93}
+.c.f{color:#ffb03a}
+.c.m{background:#5a2020}
+.c.win{background:#2c4a1e}
+.n1{color:#8bd3ff}.n2{color:#7fe6c0}.n3{color:#ffb03a}.n4{color:#b48bff}.n5{color:#ff7a7a}.n6{color:#c9f24e}
+</style></head><body>
+<div class="hud"><a href="../">←</a><span id="ttl">mines</span><span class="sp"></span><span id="hint">click / right-click flag</span><span id="sc">0/10</span></div>
+<div class="stage"><div id="b"></div></div>
+<script>
+const N=9,M=10,b=document.getElementById('b'),scEl=document.getElementById('sc');
+let cells,flags,opened,over,started;
+function idx(x,y){return y*N+x}
+function nbrs(x,y){const o=[];for(let dy=-1;dy<2;dy++)for(let dx=-1;dx<2;dx++){
+ if(!dx&&!dy)continue;const X=x+dx,Y=y+dy;if(X>=0&&Y>=0&&X<N&&Y<N)o.push([X,Y])}return o}
+function reset(){cells=Array.from({length:N*N},()=>({m:false,o:false,f:false,n:0}));
+ flags=0;opened=0;over=false;started=false;scEl.textContent='0/'+M;
+ b.innerHTML='';b.style.gridTemplateColumns='repeat('+N+',34px)';
+ cells.forEach((_,i)=>{const d=document.createElement('div');d.className='c';d.dataset.i=i;
+  d.addEventListener('click',()=>open(i));
+  d.addEventListener('contextmenu',e=>{e.preventDefault();flag(i)});
+  b.appendChild(d)})}
+function plant(safe){const pool=[...Array(N*N).keys()].filter(i=>i!==safe&&!nbrs(safe%N,(safe/N)|0).includes(i));
+ for(let k=0;k<M&&pool.length;k++){cells[pool.splice(Math.random()*pool.length|0,1)[0]].m=true}
+ cells.forEach((c,i)=>{if(c.m)return;const x=i%N,y=(i/N)|0;
+  c.n=nbrs(x,y).filter(([X,Y])=>cells[idx(X,Y)].m).length})}
+function paint(){
+ cells.forEach((c,i)=>{const d=b.children[i];d.className='c';
+  if(c.o){d.classList.add('o');if(c.m){d.classList.add('m');d.textContent='✳'}
+   else if(c.n){d.textContent=c.n;d.classList.add('n'+c.n)}}
+  else if(c.f){d.classList.add('f');d.textContent='⚑'}})}
+function open(i){
+ if(over)return;const c=cells[i];if(c.o||c.f)return;
+ if(!started){started=true;plant(i)}
+ if(c.m){over=true;cells.forEach(x=>{if(x.m)x.o=true});paint();return}
+ const stack=[i];
+ while(stack.length){const j=stack.pop(),cc=cells[j];
+  if(cc.o||cc.f||cc.m)continue;cc.o=true;opened++;
+  if(!cc.n)nbrs(j%N,(j/N)|0).forEach(([X,Y])=>{const k=idx(X,Y);if(!cells[k].o&&!cells[k].f)stack.push(k)})}
+ paint();
+ if(opened===N*N-M){over=true;cells.forEach(x=>{if(!x.o&&x.f)x.o=true});
+  b.querySelectorAll('.c').forEach(d=>d.classList.add('win'));paint()}}
+function flag(i){if(over||cells[i].o)return;
+ cells[i].f=!cells[i].f;flags+=cells[i].f?1:-1;scEl.textContent=flags+'/'+M;paint()}
+addEventListener('keydown',e=>{if(e.key===' '&&over)reset()});
+reset();
+</script></body></html>
