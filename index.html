@@ -1,1 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0d0e10">
+<meta name="description" content="Student resource library and revision tools.">
+<title>Untitled document - Google Docs</title>
+<link rel="icon" href="assets/doc.svg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
 
+<header class="top">
+  <div class="crumb mono">
+    <span class="dot"></span>
+    Portal <i>/</i> Resources <i>/</i> <b>Library</b>
+  </div>
+  <div class="tools">
+    <input id="q" class="mono" type="search" placeholder="filter…" autocomplete="off" spellcheck="false">
+    <button data-act="cloak" title="Open in about:blank">cloak</button>
+    <button data-act="install" id="inst" hidden>offline</button>
+    <button data-act="panic" class="panic-btn">panic <kbd>esc</kbd></button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Resource library<span class="mono">_</span></h1>
+    <p class="sub mono">12 items · no installs · runs after first load with the network cut</p>
+  </section>
+
+  <section class="grid" id="grid">
+    <a class="card" href="g/snake.html" data-t="snake arcade classic">
+      <span class="glyph">▚</span><span class="nm">Snake</span><span class="tag mono">arcade</span>
+    </a>
+    <a class="card" href="g/breakout.html" data-t="breakout bricks arcade">
+      <span class="glyph">▤</span><span class="nm">Breakout</span><span class="tag mono">arcade</span>
+    </a>
+    <a class="card" href="g/tetris.html" data-t="tetris blocks puzzle">
+      <span class="glyph">▦</span><span class="nm">Blocks</span><span class="tag mono">puzzle</span>
+    </a>
+    <a class="card" href="g/2048.html" data-t="2048 numbers merge puzzle">
+      <span class="glyph">◫</span><span class="nm">2048</span><span class="tag mono">puzzle</span>
+    </a>
+    <a class="card" href="g/flappy.html" data-t="flappy pipes bird one button">
+      <span class="glyph">◑</span><span class="nm">Pipes</span><span class="tag mono">reflex</span>
+    </a>
+    <a class="card" href="g/minesweeper.html" data-t="minesweeper mines logic grid">
+      <span class="glyph">◈</span><span class="nm">Mines</span><span class="tag mono">logic</span>
+    </a>
+    <a class="card" href="g/pong.html" data-t="pong paddle ai tennis">
+      <span class="glyph">▮</span><span class="nm">Pong</span><span class="tag mono">arcade</span>
+    </a>
+    <a class="card" href="g/asteroids.html" data-t="asteroids rocks space ship shooter">
+      <span class="glyph">✳</span><span class="nm">Rocks</span><span class="tag mono">shooter</span>
+    </a>
+    <a class="card" href="g/doodle.html" data-t="doodle jump platforms climb">
+      <span class="glyph">⌃</span><span class="nm">Climb</span><span class="tag mono">reflex</span>
+    </a>
+    <a class="card" href="g/connect4.html" data-t="connect four discs ai board">
+      <span class="glyph">◍</span><span class="nm">Four</span><span class="tag mono">board</span>
+    </a>
+    <a class="card" href="g/memory.html" data-t="memory match pairs cards">
+      <span class="glyph">◪</span><span class="nm">Pairs</span><span class="tag mono">memory</span>
+    </a>
+    <a class="card" href="g/invaders.html" data-t="invaders space shooter waves">
+      <span class="glyph">⋔</span><span class="nm">Invaders</span><span class="tag mono">shooter</span>
+    </a>
+    <a class="card" href="g/sudoku.html" data-t="sudoku numbers logic grid">
+      <span class="glyph">▣</span><span class="nm">Sudoku</span><span class="tag mono">logic</span>
+    </a>
+  </section>
+
+  <section class="mirrors">
+    <h2 class="mono">mirrors</h2>
+    <ul id="mir" class="mono"><li class="dim">probing…</li></ul>
+    <p class="dim mono tiny">If this host gets categorised, swap to a mirror above.</p>
+  </section>
+</main>
+
+<footer class="mono tiny dim">
+  <span>build <b id="ver">—</b></span>
+  <span>·</span>
+  <a href="?404=1">404 mode</a>
+  <span>·</span>
+  <a href="404.html">decoy</a>
+</footer>
+
+<div class="panic" id="panic">
+  <div class="gbar">
+    <span class="gi">≡</span>
+    <span class="gt">Classroom</span>
+    <span class="gc"></span>
+    <span class="ga"></span>
+    <span class="gav"></span>
+  </div>
+  <div class="gbody">
+    <div class="gside">
+      <div class="grow on">Home</div>
+      <div class="grow">Calendar</div>
+      <div class="grow">Enrolled</div>
+      <div class="grow">To-do</div>
+    </div>
+    <div class="gmain">
+      <div class="ghero"></div>
+      <div class="gcard"></div>
+      <div class="gcard w2"></div>
+      <div class="gcard"></div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/core.js"></script>
+<script>
+document.getElementById('ver').textContent = Math.random().toString(36).slice(2,7);
+const q = document.getElementById('q'), grid = document.getElementById('grid');
+q.addEventListener('input', () => {
+  const v = q.value.toLowerCase().trim();
+  for (const c of grid.children) {
+    c.hidden = !!v && !(c.dataset.t + ' ' + c.textContent.toLowerCase()).includes(v);
+  }
+});
+addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement !== q) { e.preventDefault(); q.focus(); }
+});
+</script>
+</body>
+</html>
