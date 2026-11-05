@@ -1,1 +1,59 @@
-
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>Untitled document - Google Docs</title>
+<link rel="icon" href="../assets/doc.svg"><link rel="stylesheet" href="../assets/play.css">
+</head><body>
+<div class="hud"><a href="../">←</a><span id="ttl">invaders</span><span class="sp"></span><span id="hint">arrows · space</span><span id="sc">0</span></div>
+<div class="stage"><canvas id="c"></canvas></div>
+<script>
+const W=560,H=460,cv=document.getElementById('c'),ctx=cv.getContext('2d');
+cv.width=W;cv.height=H;
+const scEl=document.getElementById('sc');
+const COLS=8,ROWS=4,IW=30,IH=22;
+let px,foes,fdir,fspeed,shots,bombs,score,lives,over,dropNext;
+function reset(){px=W/2;foes=[];score=0;lives=3;over=false;fdir=1;fspeed=.5;shots=[];bombs=[];dropNext=0;
+ scEl.textContent='0';
+ for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++)foes.push({x:60+c*54,y:50+r*44,alive:true})}
+function tick(){
+ if(over)return;
+ if(keys.ArrowLeft)px-=6; if(keys.ArrowRight)px+=6;
+ px=Math.max(24,Math.min(W-24,px));
+ let edge=false;
+ for(const f of foes){if(!f.alive)continue;f.x+=fdir*fspeed;
+  if(f.x<20||f.x>W-20-IW)edge=true}
+ if(edge){fdir*=-1;foes.forEach(f=>{if(f.alive)f.y+=16});fspeed+=.055}
+ if(Math.random()<.035&&foes.some(f=>f.alive)){
+  const live=foes.filter(f=>f.alive);
+  const f=live[Math.random()*live.length|0];bombs.push({x:f.x+IW/2,y:f.y+IH})}
+ for(const s of shots){s.y-=9}
+ shots=shots.filter(s=>s.y>0);
+ for(const bm of bombs){bm.y+=4.4}
+ bombs=bombs.filter(bm=>bm.y<H);
+ for(const s of shots)for(const f of foes){
+  if(f.alive&&s.x>f.x&&s.x<f.x+IW&&s.y>f.y&&s.y<f.y+IH){
+   f.alive=false;s.y=-9;score+=25;scEl.textContent=score;break}}
+ for(const bm of bombs){
+  if(bm.x>px-24&&bm.x<px+24&&bm.y>H-52&&bm.y<H-30){
+   bm.y=H+9;lives--;if(lives<=0)over=true}}
+ if(foes.some(f=>f.alive&&f.y+IH>H-58))over=true;
+ if(!foes.some(f=>f.alive)){const s=score;reset();score=s;scEl.textContent=score;fspeed+=.3}}
+function draw(){
+ ctx.fillStyle='#0a0b0d';ctx.fillRect(0,0,W,H);
+ for(const f of foes){if(!f.alive)continue;
+  ctx.fillStyle='#ff7a7a';ctx.fillRect(f.x,f.y+6,IW,IH-12);
+  ctx.fillRect(f.x+6,f.y,18,IH);ctx.fillStyle='#0a0b0d';
+  ctx.fillRect(f.x+9,f.y+7,4,4);ctx.fillRect(f.x+17,f.y+7,4,4)}
+ ctx.fillStyle='#c9f24e';ctx.fillRect(px-22,H-46,44,10);ctx.fillRect(px-4,H-56,8,10);
+ for(const s of shots){ctx.fillStyle='#e9e9e4';ctx.fillRect(s.x-1.5,s.y,3,10)}
+ for(const bm of bombs){ctx.fillStyle='#ffb03a';ctx.fillRect(bm.x-2,bm.y,4,9)}
+ ctx.fillStyle='#868c93';ctx.font='11px ui-monospace,monospace';ctx.fillText('lives '+lives,12,22);
+ if(over){ctx.fillStyle='rgba(0,0,0,.74)';ctx.fillRect(0,0,W,H);
+  ctx.textAlign='center';ctx.fillStyle='#e9e9e4';ctx.font='bold 20px ui-monospace,monospace';
+  ctx.fillText('GAME OVER',W/2,H/2-8);ctx.fillStyle='#868c93';ctx.font='12px ui-monospace,monospace';
+  ctx.fillText('score '+score,W/2,H/2+18);ctx.fillText('space to restart',W/2,H/2+42)}}
+const keys={};
+addEventListener('keydown',e=>{keys[e.key]=true;
+ if(e.key===' '){e.preventDefault();if(over){reset();return}shots.push({x:px,y:H-56})}});
+addEventListener('keyup',e=>{keys[e.key]=false});
+reset();(function l(){tick();draw();requestAnimationFrame(l)})();
+</script></body></html>
