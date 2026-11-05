@@ -118,25 +118,6 @@ select:focus, input[type="text"]:focus { border-color: var(--acc); }
 .game-container { flex: 1; display: flex; flex-direction: column; background: #000; position: relative; }
 .game-frame { width: 100%; height: 100%; border: none; flex: 1; }
 
-.announcement-list { display: flex; flex-direction: column; gap: 16px; }
-.announcement-card { background: #25252b; border-radius: 10px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); }
-.announcement-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.announcement-icon { width: 32px; height: 32px; background: #333; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--acc); }
-.announcement-meta { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
-.announcement-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
-.announcement-body { font-size: 13px; color: #bbb; line-height: 1.5; }
-.announcement-footer { margin-top: 16px; display: flex; justify-content: flex-end; }
-.announcement-footer button { background: #f7d466; color: #000; border: none; padding: 8px 24px; border-radius: 6px; font-weight: 600; cursor: pointer; }
-
-.whatsnew-list { display: flex; flex-direction: column; gap: 24px; padding-right: 10px; }
-.update-item h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
-.update-meta { font-size: 11px; color: #888; margin-bottom: 12px; }
-.update-section { margin-bottom: 12px; }
-.update-section-title { font-size: 11px; font-weight: 600; color: var(--acc); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
-.update-list { list-style: none; padding-left: 16px; font-size: 13px; color: #bbb; }
-.update-list li { position: relative; margin-bottom: 4px; }
-.update-list li::before { content: "•"; position: absolute; left: -12px; color: #666; }
-
 .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 16px; }
 .game-card { background: #25252b; border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.2s; border: 1px solid rgba(255,255,255,0.05); }
 .game-card:hover { transform: translateY(-4px); border-color: var(--acc); }
@@ -153,8 +134,8 @@ select:focus, input[type="text"]:focus { border-color: var(--acc); }
     <div class="left"><span>THURSDAY, NOVEMBER 5</span></div>
     <div class="center" id="clockDisplay">1:03 PM</div>
     <div class="right">
-      <div class="banner">
-        <img src="https://cdn-icons-png.flaticon.com/512/2699/2699167.png" alt="PC">
+      <div class="banner" style="display:none;">
+        <img src="" alt="PC">
         <div>
           <strong>Work Faster, Powerful PC Tools</strong>
           <span>Discover top productivity tools for work</span>
@@ -163,7 +144,7 @@ select:focus, input[type="text"]:focus { border-color: var(--acc); }
       </div>
       <div class="tray">
         <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4zM11 20H9v-2h2v2zm0-4H9v-2h2v2zm0-4H9v-2h2v2zm0-4H9V6h2v2zm4 12h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V6h2v2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
         <span>74°F</span>
       </div>
     </div>
@@ -279,7 +260,7 @@ select:focus, input[type="text"]:focus { border-color: var(--acc); }
   </div>
 
   <div class="bottom-left">
-    <img src="https://cdn-icons-png.flaticon.com/512/3222/3222800.png" style="width:24px;height:24px;">
+    <div style="font-size:24px;">⛅</div>
     <div>
       <div style="font-size:14px;font-weight:600;">74°F</div>
       <div style="font-size:11px;color:#aaa;">Partly sunny</div>
@@ -413,80 +394,6 @@ select:focus, input[type="text"]:focus { border-color: var(--acc); }
     </div>
   </div>
 
-  <div class="window" id="whatsNewWindow" style="width: 500px; height: 550px; top: 50%; left: 35%; transform: translate(-50%, -50%);">
-    <div class="win-header" id="whatsNewHeader">
-      <div class="win-title">What's New</div>
-      <div class="win-controls">
-        <button class="win-btn close" onclick="closeApp('whatsNewWindow')">x</button>
-      </div>
-    </div>
-    <div class="win-body" style="padding: 24px; overflow-y: auto; flex-direction: column; gap: 24px;">
-      <div class="whatsnew-list">
-        <div class="update-item">
-          <h4>Speed improvement & bug fixes</h4>
-          <div class="update-meta">v0.4 • October 17, 2026 <span style="background:#333;color:#fff;padding:2px 6px;border-radius:4px;font-size:9px;margin-left:8px;">Latest</span></div>
-          <div class="update-section">
-            <div class="update-section-title"><span style="color:#7fe6c0">●</span> IMPROVED</div>
-            <ul class="update-list">
-              <li>Loading times and apps being really laggy (hopefully)</li>
-              <li>Changed amazon s3 links to redirect to one of our main links</li>
-            </ul>
-          </div>
-          <div class="update-section">
-            <div class="update-section-title"><span style="color:#7cc4ff">●</span> FIXED</div>
-            <ul class="update-list">
-              <li>Fixed anime search</li>
-            </ul>
-          </div>
-        </div>
-        <div class="update-item">
-          <h4>Music restoration & hotfixes</h4>
-          <div class="update-meta">v0.3 • September 19, 2026</div>
-          <div class="update-section">
-            <div class="update-section-title"><span style="color:#7fe6c0">●</span> IMPROVED</div>
-            <ul class="update-list">
-              <li>Anime streaming and games loading should be faster. Expect less buffers during anime playback and with games.</li>
-            </ul>
-          </div>
-          <div class="update-section">
-            <div class="update-section-title"><span style="color:#7cc4ff">●</span> FIXED</div>
-            <ul class="update-list">
-              <li>Repurchased our music provider subscription. Now songs play the full length instead of 30 second previews.</li>
-              <li>Fixed anime source "HD 2" returning no subtitles for episodes. Now HD 2 and HD 3 have appropriate subtitles.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="window" id="announcementsWindow" style="width: 460px; height: 450px; top: 55%; left: 65%; transform: translate(-50%, -50%);">
-    <div class="win-header" id="announcementsHeader">
-      <div class="win-title">Announcements</div>
-      <div class="win-controls">
-        <button class="win-btn close" onclick="closeApp('announcementsWindow')">x</button>
-      </div>
-    </div>
-    <div class="win-body" style="padding: 24px; flex-direction: column;">
-      <div class="announcement-card">
-        <div class="announcement-header">
-          <div class="announcement-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-          </div>
-          <div>
-            <div class="announcement-meta">ANNOUNCEMENT</div>
-            <div style="font-size:12px;color:#888;margin-top:2px">October 27, 2026</div>
-          </div>
-        </div>
-        <div class="announcement-title">Speed improvements</div>
-        <div class="announcement-body">We've pushed some hotfixes in an attempt to make the site faster. This includes game loading times and overall site speed.</div>
-      </div>
-      <div class="announcement-footer" style="margin-top:auto;">
-        <button onclick="closeApp('announcementsWindow')">Got it</button>
-      </div>
-    </div>
-  </div>
-
   <div class="window" id="gamesWindow" style="width: 800px; height: 600px;">
     <div class="win-header" id="gamesHeader">
       <div class="win-title">Games Library</div>
@@ -540,7 +447,7 @@ select:focus, input[type="text"]:focus { border-color: var(--acc); }
       </div>
     </div>
     <div class="game-container">
-      <iframe class="game-frame" id="gameFrame" allowfullscreen></iframe>
+      <iframe class="game-frame" id="gameFrame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups" allowfullscreen></iframe>
     </div>
   </div>
 
@@ -610,6 +517,13 @@ function setWall(url, el) {
 
 function toggleSwitch(el) {
   el.classList.toggle('on');
+  if (el.id === 'preventCloseSwitch') {
+    if (el.classList.contains('on')) {
+      window.onbeforeunload = function() { return "Are you sure you want to leave?"; };
+    } else {
+      window.onbeforeunload = null;
+    }
+  }
 }
 
 function applyCloak() {
@@ -618,20 +532,20 @@ function applyCloak() {
   const favicon = document.getElementById('docFavicon');
 
   const configs = {
-    docs: { t: 'Untitled document - Google Docs', f: 'https://ssl.gstatic.com/docs/documents/images/kix-favicon7.ico' },
-    google: { t: 'Google', f: 'https://www.google.com/favicon.ico' },
-    classroom: { t: 'Classes', f: 'https://ssl.gstatic.com/classroom/favicon.png' },
-    drive: { t: 'My Drive - Google Drive', f: 'https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png' },
-    slides: { t: 'Untitled presentation - Google Slides', f: 'https://ssl.gstatic.com/docs/presentations/images/favicon5.ico' },
-    canvas: { t: 'Dashboard', f: 'https://du11hjcvx0uqb.cloudfront.net/dist/images/favicon-e10d657a73.ico' },
-    schoology: { t: 'Schoology', f: 'https://asset-cdn.schoology.com/sites/all/themes/schoology_theme/favicon.ico' },
-    khan: { t: 'Khan Academy', f: 'https://cdn.kastatic.org/images/favicon.ico' },
-    quizlet: { t: 'Quizlet', f: 'https://assets.quizlet.com/a/j/dist/app/i/quizlet.ico' },
-    edpuzzle: { t: 'Edpuzzle', f: 'https://edpuzzle.imgix.net/favicon.ico' },
-    clever: { t: 'Clever | Portal', f: 'https://assets.clever.com/favicon.ico' },
-    ixl: { t: 'IXL | Math, Language Arts, Science, Social Studies, and Spanish', f: 'https://www.ixl.com/favicon.ico' },
-    wikipedia: { t: 'Wikipedia, the free encyclopedia', f: 'https://en.wikipedia.org/static/favicon/wikipedia.ico' },
-    none: { t: 'SerumOS', f: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'12\' fill=\'%23f7d466\'/%3E%3C/svg%3E' }
+    docs: { t: 'Untitled document - Google Docs', f: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'12\' fill=\'%234285f4\'/%3E%3Cpath d=\'M20 16h18l10 10v22a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4V20a4 4 0 0 1 4-4z\' fill=\'%23fff\' opacity=\'.95\'/%3E%3C/svg%3E' },
+    google: { t: 'Google', f: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Ccircle cx=\'32\' cy=\'32\' r=\'28\' fill=\'%23fff\'/%3E%3Cpath d=\'M32 12a20 20 0 1 0 20 20H32V12z\' fill=\'%234285f4\'/%3E%3C/svg%3E' },
+    classroom: { t: 'Classes', f: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'12\' fill=\'%230f9d58\'/%3E%3Cpath d=\'M32 16a16 16 0 1 0 16 16H32V16z\' fill=\'%23fff\'/%3E%3C/svg%3E' },
+    drive: { t: 'My Drive - Google Drive', f: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'12\' fill=\'%23fbbc04\'/%3E%3Cpath d=\'M24 14h16l12 22-8 14H20l-8-14z\' fill=\'%23fff\'/%3E%3C/svg%3E' },
+    slides: { t: 'Untitled presentation - Google Slides', f: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'12\' fill=\'%23f4b400\'/%3E%3Crect x=\'16\' y=\'16\' width=\'32\' height=\'32\' fill=\'%23fff\'/%3E%3C/svg%3E' },
+    canvas: { t: 'Dashboard', f: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'12\' fill=\'%23e62429\'/%3E%3Ccircle cx=\'32\' cy=\'32\' r=\'16\' fill=\'%23fff\'/%3E%3C/svg%3E' },
+    schoology: { t: 'Schoology', f: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'12\' fill=\'%230a9edc\'/%3E%3Ccircle cx=\'32\' cy=\'32\' r=\'16\' fill=\'%23fff\'/%3E%3C/svg%3E' },
+    khan: { t: 'Khan Academy', f: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'12\' fill=\'%2314bf96\'/%3E%3Cpath d=\'M24 16h16v32H24z\' fill=\'%23fff\'/%3E%3C/svg%3E' },
+    quizlet: { t: 'Quizlet', f: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'12\' fill=\'%234259b5\'/%3E%3Ccircle cx=\'32\' cy=\'32\' r=\'16\' fill=\'%23fff\'/%3E%3C/svg%3E' },
+    edpuzzle: { t: 'Edpuzzle', f: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'12\' fill=\'%23f44b42\'/%3E%3Cpath d=\'M24 20l16 12-16 12z\' fill=\'%23fff\'/%3E%3C/svg%3E' },
+    clever: { t: 'Clever | Portal', f: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'12\' fill=\'%23426be5\'/%3E%3Cpath d=\'M20 20h24v24H20z\' fill=\'%23fff\'/%3E%3C/svg%3E' },
+    ixl: { t: 'IXL | Math, Language Arts, Science, Social Studies, and Spanish', f: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'12\' fill=\'%23ffb03a\'/%3E%3Ctext x=\'32\' y=\'44\' font-family=\'sans-serif\' font-weight=\'bold\' font-size=\'32\' fill=\'%23fff\' text-anchor=\'middle\'%3EIXL%3C/text%3E%3C/svg%3E' },
+    wikipedia: { t: 'Wikipedia, the free encyclopedia', f: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'12\' fill=\'%23fff\'/%3E%3Ctext x=\'32\' y=\'44\' font-family=\'serif\' font-weight=\'bold\' font-size=\'36\' fill=\'%23000\' text-anchor=\'middle\'%3EW%3C/text%3E%3C/svg%3E' },
+    none: { t: 'SerumOS', f: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'12\' fill=\'%23f7d466\'/%3E%3Cpath d=\'M20 16h18l10 10v22a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4V20a4 4 0 0 1 4-4z\' fill=\'%23fff\' opacity=\'.95\'/%3E%3C/svg%3E' }
   };
   const c = configs[val] || configs.none;
   title.textContent = c.t;
@@ -685,8 +599,6 @@ function makeDraggable(el, handle) {
 }
 
 makeDraggable(document.getElementById('settingsWindow'), document.getElementById('settingsHeader'));
-makeDraggable(document.getElementById('whatsNewWindow'), document.getElementById('whatsNewHeader'));
-makeDraggable(document.getElementById('announcementsWindow'), document.getElementById('announcementsHeader'));
 makeDraggable(document.getElementById('gamesWindow'), document.getElementById('gamesHeader'));
 makeDraggable(document.getElementById('gameWindow'), document.getElementById('gameHeader'));
 
