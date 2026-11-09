@@ -784,6 +784,50 @@ input[type="text"]:focus { border-color: var(--acc); }
 .proxy-btn.accent { background: var(--acc); color: #000; border-color: transparent; }
 .proxy-btn.accent:hover { background: var(--acc-dark); }
 
+.load-zone {
+  border: 2px dashed rgba(247,212,102,0.35);
+  border-radius: 12px;
+  padding: 22px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  margin-bottom: 20px;
+  background: rgba(247,212,102,0.03);
+  position: relative;
+}
+.load-zone:hover, .load-zone.drag-over {
+  border-color: var(--acc);
+  background: rgba(247,212,102,0.08);
+}
+.load-zone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+.load-zone .lz-icon { font-size: 32px; margin-bottom: 8px; }
+.load-zone .lz-title { font-size: 13px; font-weight: 600; color: var(--txt); margin-bottom: 4px; }
+.load-zone .lz-sub { font-size: 11.5px; color: var(--txt-dim); line-height: 1.5; }
+.loaded-games { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.loaded-game-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 9px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.loaded-game-row:hover { border-color: var(--acc); background: rgba(247,212,102,0.06); }
+.loaded-game-row .lg-icon { font-size: 22px; flex-shrink: 0; }
+.loaded-game-row .lg-name { flex: 1; font-size: 12.5px; font-weight: 600; color: var(--txt); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.loaded-game-row .lg-size { font-size: 11px; color: var(--txt-dim); flex-shrink: 0; }
+.loaded-game-row .lg-del { width: 22px; height: 22px; border-radius: 6px; background: rgba(255,80,80,0.15); border: 1px solid rgba(255,80,80,0.2); color: #ff6b6b; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.15s; }
+.loaded-game-row .lg-del:hover { background: rgba(255,80,80,0.3); }
 .about-badge {
   display: flex;
   align-items: center;
@@ -1244,7 +1288,16 @@ input[type="text"]:focus { border-color: var(--acc); }
       <button class="win-close-x" onclick="closeWin('gamesWindow')">&#x2715;</button>
     </div>
     <div class="games-body">
-      <h3>🎮 Browser Games — Click to Play</h3>
+      <h3>📁 Load Your Own Game File</h3>
+      <div class="load-zone" id="loadZone" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleGameDrop(event)">
+        <input type="file" accept=".html,.htm" onchange="handleGameFile(this.files[0])">
+        <div class="lz-icon">🎮</div>
+        <div class="lz-title">Drop a game HTML file here, or click to browse</div>
+        <div class="lz-sub">Works with Eaglercraft, any self-contained .html game.<br>Your file never leaves your browser.</div>
+      </div>
+      <div class="loaded-games" id="loadedGamesList"></div>
+
+      <h3>🌐 Online Browser Games — Click to Play</h3>
       <div class="games-grid">
 
         <div class="game-card" onclick="openGame('krunker')">
@@ -1351,12 +1404,12 @@ input[type="text"]:focus { border-color: var(--acc); }
           <div class="game-tag">Rhythm</div>
         </div>
 
-        <div class="game-card" onclick="openGame('minecraft2d')">
+        <div class="game-card" onclick="openGame('eaglercraft')">
           <div class="game-thumb" style="background:linear-gradient(135deg,#1a3000,#2a4800)">
             <span style="font-size:32px;">⛏️</span>
           </div>
-          <div class="game-title">Mini Craft</div>
-          <div class="game-tag">Minecraft-like</div>
+          <div class="game-title">Eaglercraft 1.8</div>
+          <div class="game-tag">Minecraft in Browser</div>
         </div>
 
         <div class="game-card" onclick="openGame('amogus')">
@@ -1428,7 +1481,7 @@ input[type="text"]:focus { border-color: var(--acc); }
         <div style="font-size:12px; color:var(--txt-dim); max-width:320px; line-height:1.6;" id="gameBlockedSub">This game blocked embedding. Click the button below to open it in a new tab.</div>
         <button class="btn accent" onclick="openGameExternal()" style="margin-top:4px;">Open in New Tab ↗</button>
       </div>
-      <iframe id="gameFrame" class="game-frame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-pointer-lock" allow="pointer-lock" allowfullscreen style="flex:1;"></iframe>
+      <iframe id="gameFrame" class="game-frame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-pointer-lock allow-modals allow-downloads" allow="pointer-lock; fullscreen" allowfullscreen style="flex:1;"></iframe>
     </div>
   </div>
 
@@ -1449,7 +1502,7 @@ const GAME_URLS = {
   drift:      "https://driftboss.io",
   slope:      "https://slope-game.github.io",
   geometry:   "https://geometrydashgame.net",
-  minecraft2d:"https://classic.minecraft.net",
+  eaglercraft:"./eaglercraft.html",
   amogus:     "https://impostors.io",
   powerline:  "https://powerline.io",
   tetris:     "https://tetris.com/play-tetris",
@@ -1462,17 +1515,23 @@ const GAME_TITLES = {
   krunker:"Krunker.io", slither:"Slither.io", agar:"Agar.io", diep:"Diep.io",
   mope:"Mope.io", paper:"Paper.io 2", wormate:"Wormate.io", surviv:"Surviv.io",
   shell:"Shell Shockers", "1v1":"1v1.lol", drift:"Drift Boss", slope:"Slope",
-  geometry:"Geometry Dash", minecraft2d:"Mini Craft", amogus:"Impostor.io",
+  geometry:"Geometry Dash", eaglercraft:"Eaglercraft 1.8", amogus:"Impostor.io",
   powerline:"Powerline.io", tetris:"Tetris", chess:"Chess",
   "2048":"2048", minesweeper:"Minesweeper"
 };
 
 let currentGameId = null;
+let currentGameUrl = null;
 
 function openGame(id) {
   currentGameId = id;
   const title = GAME_TITLES[id] || "Game";
   const url = GAME_URLS[id];
+  currentGameUrl = url;
+  openGameUrl(title, url);
+}
+
+function openGameUrl(title, url) {
   document.getElementById("gameTitle").textContent = title;
 
   const frame = document.getElementById("gameFrame");
@@ -1482,10 +1541,18 @@ function openGame(id) {
 
   frame.style.display = "block";
   blockedMsg.style.display = "none";
-
   frame.src = "";
+
+  const isLocal = url.startsWith("./") || url.startsWith("/") || url.startsWith("blob:");
+
   setTimeout(() => {
     frame.src = url;
+
+    if (isLocal) {
+      frame.onload = () => {};
+      openWin("gameWindow");
+      return;
+    }
 
     const blockTimer = setTimeout(() => {
       frame.style.display = "none";
@@ -1508,14 +1575,12 @@ function openGame(id) {
       } catch(e) {}
     };
   }, 60);
-
   openWin("gameWindow");
 }
 
 function openGameExternal() {
-  if (currentGameId && GAME_URLS[currentGameId]) {
-    window.open(GAME_URLS[currentGameId], "_blank");
-  }
+  const url = currentGameUrl || (currentGameId && GAME_URLS[currentGameId]);
+  if (url) window.open(url, "_blank");
 }
 
 const PROXIES = [
