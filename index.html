@@ -65,8 +65,6 @@ body{font-family:var(--font);color:var(--txt);font-size:13px;-webkit-font-smooth
   overflow:hidden;flex-shrink:0;
 }
 .icon-img svg{width:28px;height:28px}
-.icon-img .app-logo{width:36px;height:36px;display:block}
-.tb-btn .app-logo{width:24px;height:24px;display:block;flex-shrink:0}
 .icon span{
   font-size:11px;font-weight:400;text-align:center;color:#fff;
   text-shadow:0 1px 6px rgba(0,0,0,1),0 0 12px rgba(0,0,0,0.8);
@@ -456,177 +454,104 @@ input[type="text"]:focus{border-color:var(--acc);background:rgba(255,255,255,0.0
 </style>
 
 <div id="os">
-<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
-  <symbol id="logo-games" viewBox="0 0 48 48">
-    <path d="M13 15h22c4 0 7 3 8 7l2 12c.7 4-3.8 6.5-6.8 3.7l-6-5.2H15.8l-6 5.2C6.8 40.5 2.3 38 3 34l2-12c1-4 4-7 8-7Z" fill="#fff"/>
-    <path d="M14 22v10M9 27h10" stroke="#107c10" stroke-width="3.2" stroke-linecap="round"/>
-    <circle cx="32" cy="25" r="2.3" fill="#107c10"/><circle cx="37" cy="30" r="2.3" fill="#107c10"/>
-  </symbol>
-  <symbol id="logo-github" viewBox="0 0 48 48">
-    <path fill="currentColor" d="M24 4.5a19.5 19.5 0 0 0-6.17 38c.98.18 1.34-.42 1.34-.94v-3.35c-5.46 1.19-6.61-2.32-6.61-2.32-.89-2.27-2.18-2.87-2.18-2.87-1.78-1.22.14-1.2.14-1.2 1.97.14 3.01 2.02 3.01 2.02 1.75 3 4.58 2.13 5.7 1.63.18-1.27.69-2.13 1.25-2.62-4.36-.5-8.95-2.18-8.95-9.7 0-2.14.76-3.89 2.02-5.26-.2-.5-.88-2.5.2-5.2 0 0 1.65-.53 5.4 2.01a18.8 18.8 0 0 1 9.83 0c3.75-2.54 5.39-2.01 5.39-2.01 1.08 2.7.4 4.7.2 5.2 1.26 1.37 2.02 3.12 2.02 5.26 0 7.54-4.6 9.2-8.98 9.69.71.62 1.34 1.81 1.34 3.65v5.42c0 .52.35 1.13 1.35.94A19.5 19.5 0 0 0 24 4.5Z"/>
-  </symbol>
-  <symbol id="logo-netflix" viewBox="0 0 48 48">
-    <path d="M10 6h8l12 36h-8L10 6Zm20 0h8v36h-8V6Z" fill="#e50914"/>
-    <path d="M10 6v36l8-1V6h-8Zm20 0v36l8-1V6h-8Z" fill="#b20710"/>
-    <path d="M18 6h4l8 23v13h-4L18 18V6Z" fill="#f6121d"/>
-  </symbol>
-  <symbol id="logo-youtube" viewBox="0 0 48 48">
-    <rect x="4" y="10" width="40" height="28" rx="8" fill="#ff0033"/>
-    <path d="M20 17.5 32 24l-12 6.5v-13Z" fill="#fff"/>
-  </symbol>
-  <symbol id="logo-spotify" viewBox="0 0 48 48">
-    <circle cx="24" cy="24" r="21" fill="#1ed760"/>
-    <path d="M11 18c9-2.8 18-1.7 26 3" fill="none" stroke="#102018" stroke-width="3.3" stroke-linecap="round"/>
-    <path d="M13 25c7-2 15-1.2 22 2.4" fill="none" stroke="#102018" stroke-width="2.8" stroke-linecap="round"/>
-    <path d="M15 31c6-1.3 12-.6 17 2" fill="none" stroke="#102018" stroke-width="2.5" stroke-linecap="round"/>
-  </symbol>
-  <symbol id="logo-desmos" viewBox="0 0 48 48">
-    <rect x="4" y="4" width="40" height="40" rx="10" fill="#fff"/>
-    <path d="M11 24h26M24 10v28" stroke="#9ca3af" stroke-width="1.5"/>
-    <path d="M9 34c7-1 8-18 15-18s8 17 15 18" fill="none" stroke="#e84a3c" stroke-width="3.6" stroke-linecap="round"/>
-    <circle cx="24" cy="16" r="2.3" fill="#e84a3c"/>
-  </symbol>
-  <symbol id="logo-browser" viewBox="0 0 48 48">
-    <circle cx="24" cy="24" r="21" fill="#fff"/>
-    <path d="M8 17c4-8 14-13 23-9 5 2 8 6 9 11-6-4-11-3-15 1-4 4-4 10-1 14-9-1-16-8-16-17Z" fill="#de5833"/>
-    <path d="M10 30c6 4 13 4 19 0 4-3 6-8 5-13 6 5 7 14 2 21-6 8-18 9-25 2-3-3-5-6-5-10l4 0Z" fill="#f6a33a"/>
-    <circle cx="24" cy="24" r="7" fill="#fff"/>
-  </symbol>
-  <symbol id="logo-chatgpt" viewBox="0 0 48 48">
-    <g fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M24 8a8 8 0 0 1 13.8 5.5 8 8 0 0 1 3.1 13.7 8 8 0 0 1-7.1 12.5A8 8 0 0 1 20 42a8 8 0 0 1-13.8-5.5A8 8 0 0 1 3.1 22.8a8 8 0 0 1 7.1-12.5A8 8 0 0 1 24 8Z"/>
-      <path d="m16 14 16 9M10 22l16 9m-8 8 16-9m-20 2 0-18m12 22V18m8 9 0-14"/>
-    </g>
-  </symbol>
-  <symbol id="logo-roblox" viewBox="0 0 48 48">
-    <g transform="rotate(15 24 24)"><rect x="7" y="7" width="34" height="34" rx="2" fill="currentColor"/><rect x="18" y="18" width="12" height="12" fill="#111"/></g>
-  </symbol>
-  <symbol id="logo-twitch" viewBox="0 0 48 48">
-    <path d="M9 5h34v25L31 42H21l-7 6v-6H9V5Z" fill="#fff"/>
-    <path d="M14 10h24v17l-8 8h-9v-5h-7V10Z" fill="#9147ff"/>
-    <path d="M23 15h3v10h-3zm8 0h3v10h-3z" fill="#fff"/>
-  </symbol>
-  <symbol id="logo-notepad" viewBox="0 0 48 48">
-    <rect x="9" y="5" width="30" height="38" rx="4" fill="#fff"/>
-    <rect x="9" y="5" width="30" height="8" rx="4" fill="#1689e8"/>
-    <path d="M16 20h16M16 26h16M16 32h13M16 38h10" stroke="#5c9ed6" stroke-width="2.2" stroke-linecap="round"/>
-    <path d="M15 5v-2m9 2v-2m9 2v-2" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
-  </symbol>
-  <symbol id="logo-calculator" viewBox="0 0 48 48">
-    <rect x="8" y="4" width="32" height="40" rx="5" fill="#fff"/>
-    <rect x="13" y="9" width="22" height="8" rx="2" fill="#0878d1"/>
-    <g fill="#1689e8"><rect x="13" y="22" width="5" height="5" rx="1"/><rect x="21" y="22" width="5" height="5" rx="1"/><rect x="29" y="22" width="6" height="5" rx="1"/><rect x="13" y="30" width="5" height="5" rx="1"/><rect x="21" y="30" width="5" height="5" rx="1"/><rect x="29" y="30" width="6" height="13" rx="1"/><rect x="13" y="38" width="5" height="5" rx="1"/><rect x="21" y="38" width="5" height="5" rx="1"/></g>
-  </symbol>
-  <symbol id="logo-crunchyroll" viewBox="0 0 48 48">
-    <circle cx="24" cy="24" r="21" fill="#f47521"/>
-    <path d="M34 13a15 15 0 1 0 1 21 14 14 0 1 1-1-21Z" fill="#fff"/>
-    <circle cx="30" cy="17" r="3" fill="#fff"/>
-  </symbol>
-  <symbol id="logo-settings" viewBox="0 0 48 48">
-    <g transform="scale(2)" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/>
-      <path d="m19.4 15 .1.1a1.8 1.8 0 0 1-2.5 2.5l-.1-.1a1.8 1.8 0 0 0-3 .9v.2a1.8 1.8 0 0 1-3.6 0v-.2a1.8 1.8 0 0 0-3-.9l-.1.1a1.8 1.8 0 0 1-2.5-2.5l.1-.1a1.8 1.8 0 0 0-.9-3h-.2a1.8 1.8 0 0 1 0-3.6h.2a1.8 1.8 0 0 0 .9-3l-.1-.1a1.8 1.8 0 0 1 2.5-2.5l.1.1a1.8 1.8 0 0 0 3-.9v-.2a1.8 1.8 0 0 1 3.6 0v.2a1.8 1.8 0 0 0 3 .9l.1-.1a1.8 1.8 0 0 1 2.5 2.5l-.1.1a1.8 1.8 0 0 0 .9 3h.2a1.8 1.8 0 0 1 0 3.6h-.2a1.8 1.8 0 0 0-.9 3Z"/>
-    </g>
-  </symbol>
-</svg>
 <div id="wallpaper"></div>
 
 <div id="desktop">
 
   <div class="icon" onclick="openWin('gamesWindow')">
     <div class="icon-img" style="background:#107c10">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Games"><use href="#logo-games"></use></svg>
+      <img src="https://img.icons8.com/fluency/96/controller.png" style="width:36px;height:36px;object-fit:contain">
     </div>
     <span>Games</span>
   </div>
 
   <div class="icon" onclick="openBrowser('https://github.com','GitHub')">
     <div class="icon-img" style="background:#24292f">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Github"><use href="#logo-github"></use></svg>
+      <img src="https://github.com/favicon.ico" style="width:32px;height:32px;object-fit:contain;filter:invert(1)">
     </div>
     <span>GitHub</span>
   </div>
 
   <div class="icon" onclick="openBrowser('https://www.netflix.com','Netflix')">
     <div class="icon-img" style="background:#000">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Netflix"><use href="#logo-netflix"></use></svg>
+      <img src="https://assets.nflxext.com/ffe/siteui/common/icons/nficon2016.ico" style="width:38px;height:38px;object-fit:contain">
     </div>
     <span>Netflix</span>
   </div>
 
   <div class="icon" onclick="openBrowser('https://www.youtube.com','YouTube')">
     <div class="icon-img" style="background:#fff">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Youtube"><use href="#logo-youtube"></use></svg>
+      <img src="https://www.youtube.com/favicon.ico" style="width:32px;height:32px;object-fit:contain">
     </div>
     <span>YouTube</span>
   </div>
 
   <div class="icon" onclick="openBrowser('https://open.spotify.com','Spotify')">
     <div class="icon-img" style="background:#191414">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Spotify"><use href="#logo-spotify"></use></svg>
+      <img src="https://open.spotifycdn.com/cdn/images/favicon32.b64ecc03.png" style="width:34px;height:34px;object-fit:contain">
     </div>
     <span>Spotify</span>
   </div>
 
   <div class="icon" onclick="openBrowser('https://www.desmos.com/calculator','Desmos')">
     <div class="icon-img" style="background:#fff">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Desmos"><use href="#logo-desmos"></use></svg>
+      <img src="https://www.desmos.com/favicon.ico" style="width:34px;height:34px;object-fit:contain">
     </div>
     <span>Desmos</span>
   </div>
 
   <div class="icon" onclick="openBrowser('https://duckduckgo.com','Browser')">
     <div class="icon-img" style="background:#de5833">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Browser"><use href="#logo-browser"></use></svg>
+      <img src="https://duckduckgo.com/favicon.ico" style="width:34px;height:34px;object-fit:contain">
     </div>
     <span>Browser</span>
   </div>
 
   <div class="icon" onclick="openBrowser('https://chat.openai.com','ChatGPT')">
-    <div class="icon-img" style="background:#111">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Chatgpt"><use href="#logo-chatgpt"></use></svg>
+    <div class="icon-img" style="background:#fff">
+      <img src="https://cdn.oaistatic.com/assets/favicon-o20kmmos.svg" style="width:32px;height:32px;object-fit:contain">
     </div>
     <span>ChatGPT</span>
   </div>
 
   <div class="icon" onclick="openBrowser('https://www.roblox.com','Roblox')">
-    <div class="icon-img" style="background:#111">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Roblox"><use href="#logo-roblox"></use></svg>
+    <div class="icon-img" style="background:#fff">
+      <img src="https://www.roblox.com/favicon.ico" style="width:34px;height:34px;object-fit:contain">
     </div>
     <span>Roblox</span>
   </div>
 
   <div class="icon" onclick="openBrowser('https://www.twitch.tv','Twitch')">
     <div class="icon-img" style="background:#9147ff">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Twitch"><use href="#logo-twitch"></use></svg>
+      <img src="https://static.twitchsvc.net/assets/uploads/glitch_474x356.png" style="width:34px;height:34px;object-fit:contain">
     </div>
     <span>Twitch</span>
   </div>
 
   <div class="icon" onclick="openNotepad()">
     <div class="icon-img" style="background:#fff">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Notepad"><use href="#logo-notepad"></use></svg>
+      <img src="https://img.icons8.com/fluency/96/notepad.png" style="width:36px;height:36px;object-fit:contain">
     </div>
     <span>Notepad</span>
   </div>
 
   <div class="icon" onclick="openCalculator()">
     <div class="icon-img" style="background:#0078d4">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Calculator"><use href="#logo-calculator"></use></svg>
+      <img src="https://img.icons8.com/fluency/96/calculator.png" style="width:36px;height:36px;object-fit:contain">
     </div>
     <span>Calculator</span>
   </div>
 
   <div class="icon" onclick="openBrowser('https://www.crunchyroll.com','Crunchyroll')">
     <div class="icon-img" style="background:#f47521">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Crunchyroll"><use href="#logo-crunchyroll"></use></svg>
+      <img src="https://www.crunchyroll.com/favicon.ico" style="width:34px;height:34px;object-fit:contain">
     </div>
     <span>Anime</span>
   </div>
 
   <div class="icon" onclick="openWin('settingsWindow')">
     <div class="icon-img" style="background:#0078d4">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Settings"><use href="#logo-settings"></use></svg>
+      <img src="https://img.icons8.com/fluency/96/settings.png" style="width:36px;height:36px;object-fit:contain">
     </div>
     <span>Settings</span>
   </div>
@@ -645,31 +570,31 @@ input[type="text"]:focus{border-color:var(--acc);background:rgba(255,255,255,0.0
 
   <div id="taskbar-center">
     <div class="tb-btn open" onclick="toggleWindow('gamesWindow')" id="tb-games">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Games"><use href="#logo-games"></use></svg>
+      <img src="https://img.icons8.com/fluency/48/controller.png" style="width:22px;height:22px;object-fit:contain">
       <div class="tb-dot"></div><div class="tb-tooltip">Games</div>
     </div>
     <div class="tb-btn" onclick="openBrowser('https://www.youtube.com','YouTube')" id="tb-yt">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Youtube"><use href="#logo-youtube"></use></svg>
+      <img src="https://www.youtube.com/favicon.ico" style="width:22px;height:22px;object-fit:contain">
       <div class="tb-dot"></div><div class="tb-tooltip">YouTube</div>
     </div>
     <div class="tb-btn" onclick="openBrowser('https://www.netflix.com','Netflix')" id="tb-netflix">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Netflix"><use href="#logo-netflix"></use></svg>
+      <img src="https://assets.nflxext.com/ffe/siteui/common/icons/nficon2016.ico" style="width:22px;height:22px;object-fit:contain">
       <div class="tb-dot"></div><div class="tb-tooltip">Netflix</div>
     </div>
     <div class="tb-btn" onclick="openBrowser('https://open.spotify.com','Spotify')" id="tb-spotify">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Spotify"><use href="#logo-spotify"></use></svg>
+      <img src="https://open.spotifycdn.com/cdn/images/favicon32.b64ecc03.png" style="width:22px;height:22px;object-fit:contain">
       <div class="tb-dot"></div><div class="tb-tooltip">Spotify</div>
     </div>
     <div class="tb-btn" onclick="openBrowser('https://www.roblox.com','Roblox')" id="tb-roblox">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Roblox"><use href="#logo-roblox"></use></svg>
+      <img src="https://www.roblox.com/favicon.ico" style="width:22px;height:22px;object-fit:contain">
       <div class="tb-dot"></div><div class="tb-tooltip">Roblox</div>
     </div>
     <div class="tb-btn" onclick="openBrowser('https://duckduckgo.com','Browser')" id="tb-browser">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Browser"><use href="#logo-browser"></use></svg>
+      <img src="https://duckduckgo.com/favicon.ico" style="width:22px;height:22px;object-fit:contain;border-radius:4px">
       <div class="tb-dot"></div><div class="tb-tooltip">Browser</div>
     </div>
     <div class="tb-btn" onclick="openWin('settingsWindow')" id="tb-settings">
-      <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="Settings"><use href="#logo-settings"></use></svg>
+      <img src="https://img.icons8.com/fluency/48/settings.png" style="width:22px;height:22px;object-fit:contain">
       <div class="tb-dot"></div><div class="tb-tooltip">Settings</div>
     </div>
   </div>
@@ -823,7 +748,7 @@ input[type="text"]:focus{border-color:var(--acc);background:rgba(255,255,255,0.0
         <p class="sub">SerumOS</p>
         <div class="about-badge">
           <div class="a-logo">
-            <svg class="app-logo" viewBox="0 0 48 48" role="img" aria-label="SerumOS"><use href="#logo-settings"></use></svg>
+            <svg viewBox="0 0 24 24" fill="#fff"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
           </div>
           <div>
             <div class="a-name">SerumOS</div>
@@ -855,120 +780,30 @@ input[type="text"]:focus{border-color:var(--acc);background:rgba(255,255,255,0.0
       <button class="wc-btn close" onclick="closeWin('gamesWindow')" title="Close"><svg viewBox="0 0 10 10"><line x1="0" y1="0" x2="10" y2="10"/><line x1="10" y1="0" x2="0" y2="10"/></svg></button>
     </div>
   </div>
-  <div class="games-body">
-    <h3>🎮 Click to Play</h3>
-    <div class="games-grid">
+      <div class="games-body">
+      <h3>🎮 Self-Hosted — 100% Playable, Never Blocked</h3>
+      <div class="games-grid">
 
       <div class="game-card" onclick="openGame('eaglercraft')">
         <div class="game-thumb" style="background:linear-gradient(135deg,#1a3000,#2a5000)"><span style="font-size:30px">⛏️</span></div>
         <div class="game-title">Eaglercraft 1.8</div>
-        <div class="game-tag">Minecraft in Browser</div>
+        <div class="game-tag">Minecraft</div>
       </div>
 
-      <div class="game-card" onclick="openGame('krunker')">
-        <div class="game-thumb" style="background:linear-gradient(135deg,#1a1a2e,#16213e)"><span style="font-size:30px">🔫</span></div>
-        <div class="game-title">Krunker.io</div>
-        <div class="game-tag">FPS Shooter</div>
-      </div>
-
-      <div class="game-card" onclick="openGame('shell')">
-        <div class="game-thumb" style="background:linear-gradient(135deg,#201000,#402800)"><span style="font-size:30px">💣</span></div>
-        <div class="game-title">Shell Shockers</div>
-        <div class="game-tag">Egg FPS</div>
-      </div>
-
-      <div class="game-card" onclick="openGame('1v1')">
-        <div class="game-thumb" style="background:linear-gradient(135deg,#001428,#002040)"><span style="font-size:30px">⚔️</span></div>
-        <div class="game-title">1v1.lol</div>
-        <div class="game-tag">Build & Fight</div>
-      </div>
-
-      <div class="game-card" onclick="openGame('surviv')">
-        <div class="game-thumb" style="background:linear-gradient(135deg,#0a2010,#143020)"><span style="font-size:30px">🪖</span></div>
-        <div class="game-title">Surviv.io</div>
-        <div class="game-tag">Battle Royale</div>
-      </div>
-
-      <div class="game-card" onclick="openGame('slither')">
-        <div class="game-thumb" style="background:linear-gradient(135deg,#0d2b0d,#1a4a1a)"><span style="font-size:30px">🐍</span></div>
-        <div class="game-title">Slither.io</div>
-        <div class="game-tag">Multiplayer</div>
-      </div>
-
-      <div class="game-card" onclick="openGame('agar')">
-        <div class="game-thumb" style="background:linear-gradient(135deg,#0a1628,#102040)"><span style="font-size:30px">🔵</span></div>
-        <div class="game-title">Agar.io</div>
-        <div class="game-tag">Multiplayer</div>
-      </div>
-
-      <div class="game-card" onclick="openGame('diep')">
-        <div class="game-thumb" style="background:linear-gradient(135deg,#141428,#1e1e40)"><span style="font-size:30px">🎯</span></div>
-        <div class="game-title">Diep.io</div>
-        <div class="game-tag">Tank Shooter</div>
-      </div>
-
-      <div class="game-card" onclick="openGame('paper')">
-        <div class="game-thumb" style="background:linear-gradient(135deg,#1a0a28,#280a3c)"><span style="font-size:30px">📄</span></div>
-        <div class="game-title">Paper.io 2</div>
-        <div class="game-tag">Territory</div>
-      </div>
-
-      <div class="game-card" onclick="openGame('powerline')">
-        <div class="game-thumb" style="background:linear-gradient(135deg,#000a1a,#000f28)"><span style="font-size:30px">⚡</span></div>
-        <div class="game-title">Powerline.io</div>
-        <div class="game-tag">Snake Online</div>
-      </div>
-
-      <div class="game-card" onclick="openGame('slope')">
-        <div class="game-thumb" style="background:linear-gradient(135deg,#001a1a,#002828)"><span style="font-size:30px">⚽</span></div>
-        <div class="game-title">Slope</div>
-        <div class="game-tag">Endless Runner</div>
-      </div>
-
-      <div class="game-card" onclick="openGame('drift')">
-        <div class="game-thumb" style="background:linear-gradient(135deg,#1a0028,#2a0040)"><span style="font-size:30px">🚗</span></div>
-        <div class="game-title">Drift Boss</div>
-        <div class="game-tag">Driving</div>
-      </div>
-
-      <div class="game-card" onclick="openGame('amogus')">
-        <div class="game-thumb" style="background:linear-gradient(135deg,#1a0a28,#2c0a40)"><span style="font-size:30px">🚀</span></div>
-        <div class="game-title">Impostor.io</div>
-        <div class="game-tag">Among Us-like</div>
-      </div>
-
-      <div class="game-card" onclick="openGame('mope')">
-        <div class="game-thumb" style="background:linear-gradient(135deg,#0d2010,#143018)"><span style="font-size:30px">🦁</span></div>
-        <div class="game-title">Mope.io</div>
-        <div class="game-tag">Survival</div>
-      </div>
-
-      <div class="game-card" onclick="openGame('wormate')">
-        <div class="game-thumb" style="background:linear-gradient(135deg,#1a0a0a,#3c0a0a)"><span style="font-size:30px">🪱</span></div>
-        <div class="game-title">Wormate.io</div>
-        <div class="game-tag">Multiplayer</div>
-      </div>
-
-      <div class="game-card" onclick="openGame('geometry')">
-        <div class="game-thumb" style="background:linear-gradient(135deg,#001428,#001e3c)"><span style="font-size:30px">🔷</span></div>
-        <div class="game-title">Geometry Dash</div>
-        <div class="game-tag">Rhythm</div>
+      <div class="game-card" onclick="openGame('snake')">
+        <div class="game-thumb" style="background:linear-gradient(135deg,#001a00,#003300)"><span style="font-size:30px">🐍</span></div>
+        <div class="game-title">Snake</div>
+        <div class="game-tag">Classic</div>
       </div>
 
       <div class="game-card" onclick="openGame('tetris')">
-        <div class="game-thumb" style="background:linear-gradient(135deg,#0a0a1e,#14143c)"><span style="font-size:30px">🟩</span></div>
+        <div class="game-thumb" style="background:linear-gradient(135deg,#000a1e,#001040)"><span style="font-size:30px">🟦</span></div>
         <div class="game-title">Tetris</div>
         <div class="game-tag">Classic</div>
       </div>
 
-      <div class="game-card" onclick="openGame('chess')">
-        <div class="game-thumb" style="background:linear-gradient(135deg,#1a1000,#2a1800)"><span style="font-size:30px">♟️</span></div>
-        <div class="game-title">Chess</div>
-        <div class="game-tag">Strategy</div>
-      </div>
-
       <div class="game-card" onclick="openGame('2048')">
-        <div class="game-thumb" style="background:linear-gradient(135deg,#1a1200,#2a1c00)"><span style="font-size:22px;font-weight:800;color:#f7d466">2048</span></div>
+        <div class="game-thumb" style="background:linear-gradient(135deg,#1a1200,#2a1c00)"><span style="font-size:22px;font-weight:800;color:#ffa500">2048</span></div>
         <div class="game-title">2048</div>
         <div class="game-tag">Puzzle</div>
       </div>
@@ -979,9 +814,38 @@ input[type="text"]:focus{border-color:var(--acc);background:rgba(255,255,255,0.0
         <div class="game-tag">Classic</div>
       </div>
 
+      <div class="game-card" onclick="openGame('pong')">
+        <div class="game-thumb" style="background:linear-gradient(135deg,#0a0a0a,#1a1a1a)"><span style="font-size:30px">🏓</span></div>
+        <div class="game-title">Pong</div>
+        <div class="game-tag">Classic</div>
+      </div>
+
+      <div class="game-card" onclick="openGame('flappy')">
+        <div class="game-thumb" style="background:linear-gradient(135deg,#0a0a14,#141428)"><span style="font-size:30px">🐦</span></div>
+        <div class="game-title">Flappy Bird</div>
+        <div class="game-tag">Arcade</div>
+      </div>
+
+      <div class="game-card" onclick="openGame('spaceinvaders')">
+        <div class="game-thumb" style="background:linear-gradient(135deg,#000,#0a0a14)"><span style="font-size:30px">👾</span></div>
+        <div class="game-title">Space Invaders</div>
+        <div class="game-tag">Shooter</div>
+      </div>
+
+      <div class="game-card" onclick="openGame('breakout')">
+        <div class="game-thumb" style="background:linear-gradient(135deg,#0a000a,#140014)"><span style="font-size:30px">🧱</span></div>
+        <div class="game-title">Breakout</div>
+        <div class="game-tag">Arcade</div>
+      </div>
+
+      <div class="game-card" onclick="openGame('pacman')">
+        <div class="game-thumb" style="background:linear-gradient(135deg,#0a0a00,#1a1a00)"><span style="font-size:30px">👻</span></div>
+        <div class="game-title">Pac-Man</div>
+        <div class="game-tag">Arcade</div>
+      </div>
+
+      </div>
     </div>
-  </div>
-</div>
 
 <div class="window" id="gameWindow">
   <div class="win-bar" id="gameBar">
@@ -1053,23 +917,23 @@ input[type="text"]:focus{border-color:var(--acc);background:rgba(255,255,255,0.0
 </div>
 
 <script>
-const GAME_URLS={
+const GAME_SRCS={
   eaglercraft:"./eaglercraft.html",
-  krunker:"https://krunker.io",slither:"https://slither.io",agar:"https://agar.io",
-  diep:"https://diep.io",mope:"https://mope.io",paper:"https://paper-io.com",
-  wormate:"https://wormate.io",surviv:"https://surviv.io",shell:"https://shellshock.io",
-  "1v1":"https://1v1.lol",drift:"https://driftboss.io",slope:"https://slope-game.github.io",
-  geometry:"https://geometrydashgame.net",amogus:"https://impostors.io",
-  powerline:"https://powerline.io",tetris:"https://tetris.com/play-tetris",
-  chess:"https://www.chess.com/play/computer","2048":"https://play2048.co",
-  minesweeper:"https://minesweeper.online"
+  snake:`<!DOCTYPE html><html><head><meta charset="utf-8"><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:'Segoe UI',sans-serif;color:#fff;overflow:hidden}#hud{display:flex;gap:32px;margin-bottom:16px;font-size:14px;font-weight:600;letter-spacing:0.06em;color:#888}#hud span{color:#0f0}canvas{border:1px solid #1a1a1a;border-radius:4px}#msg{position:absolute;text-align:center;pointer-events:none}#msg h2{font-size:28px;font-weight:700;color:#0f0;text-shadow:0 0 20px #0f0}#msg p{font-size:13px;color:#666;margin-top:8px}</style></head><body><div id="hud">SCORE <span id="sc">0</span>&nbsp;&nbsp;HIGH <span id="hi">0</span></div><canvas id="c"></canvas><div id="msg"><h2 id="mt">SNAKE</h2><p id="ms">Press Space or tap to start</p></div><script>const c=document.getElementById('c'),ctx=c.getContext('2d'),SZ=18,COLS=28,ROWS=24;c.width=COLS*SZ;c.height=ROWS*SZ;let snake,dir,nd,food,score,hi=0,state='idle',loop;function init(){snake=[{x:14,y:12},{x:13,y:12},{x:12,y:12}];dir={x:1,y:0};nd={x:1,y:0};food=rnd();score=0}function rnd(){let p;do{p={x:Math.floor(Math.random()*COLS),y:Math.floor(Math.random()*ROWS)}}while(snake.some(s=>s.x===p.x&&s.y===p.y));return p}function step(){dir=nd;const h={x:(snake[0].x+dir.x+COLS)%COLS,y:(snake[0].y+dir.y+ROWS)%ROWS};if(snake.some(s=>s.x===h.x&&s.y===h.y)){state='dead';document.getElementById('mt').textContent='GAME OVER';document.getElementById('ms').textContent='Score: '+score+' — Space to restart';document.getElementById('msg').style.display='block';clearInterval(loop);return}snake.unshift(h);if(h.x===food.x&&h.y===food.y){score++;document.getElementById('sc').textContent=score;if(score>hi){hi=score;document.getElementById('hi').textContent=hi}food=rnd()}else snake.pop();draw()}function draw(){ctx.fillStyle='#0a0a0a';ctx.fillRect(0,0,c.width,c.height);snake.forEach((s,i)=>{ctx.globalAlpha=1-i/snake.length*0.5;ctx.fillStyle='#1aff1a';ctx.fillRect(s.x*SZ+1,s.y*SZ+1,SZ-2,SZ-2)});ctx.globalAlpha=1;ctx.fillStyle='#ff4444';ctx.fillRect(food.x*SZ+3,food.y*SZ+3,SZ-6,SZ-6)}function start(){document.getElementById('msg').style.display='none';init();if(loop)clearInterval(loop);loop=setInterval(step,110)}document.addEventListener('keydown',e=>{if(e.key===' '){e.preventDefault();if(state==='idle'||state==='dead'){state='run';start()}}if(state!=='run')return;if(e.key==='ArrowUp'&&dir.y===0)nd={x:0,y:-1};if(e.key==='ArrowDown'&&dir.y===0)nd={x:0,y:1};if(e.key==='ArrowLeft'&&dir.x===0)nd={x:-1,y:0};if(e.key==='ArrowRight'&&dir.x===0)nd={x:1,y:0}});let tx=0;c.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;if(state!=='run'){state='run';start()}},{passive:true});c.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>30){if(dx>0&&dir.x===0)nd={x:1,y:0};else if(dx<0&&dir.x===0)nd={x:-1,y:0}}},{passive:true});draw();<\\/script></body></html>`,
+  tetris:`<!DOCTYPE html><html><head><meta charset="utf-8"><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;display:flex;align-items:center;justify-content:center;height:100vh;font-family:'Segoe UI',sans-serif;color:#fff;gap:20px}#info{display:flex;flex-direction:column;gap:14px;min-width:76px}.lbl{font-size:9px;font-weight:700;letter-spacing:0.1em;color:#444}.val{font-size:22px;font-weight:700;color:#fff;margin-top:2px}canvas{border:1px solid #1a1a1a}#msg{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0.85);text-align:center}#msg h2{font-size:26px;font-weight:700;color:#0af;margin-bottom:8px}#msg p{font-size:13px;color:#888}</style></head><body><div id="info"><div><div class="lbl">SCORE</div><div class="val" id="sc">0</div></div><div><div class="lbl">LINES</div><div class="val" id="ln">0</div></div><div><div class="lbl">LEVEL</div><div class="val" id="lv">1</div></div><div><div class="lbl">NEXT</div><canvas id="nc" width="76" height="76"></canvas></div></div><canvas id="c"></canvas><div id="msg"><h2>TETRIS</h2><p>Space / Tap to start</p></div><script>const W=10,H=20,SZ=28,c=document.getElementById('c'),ctx=c.getContext('2d'),nc=document.getElementById('nc'),nctx=nc.getContext('2d');c.width=W*SZ;c.height=H*SZ;const PIECES=[[[1,1,1,1]],[[1,1],[1,1]],[[1,1,1],[0,1,0]],[[1,1,1],[1,0,0]],[[1,1,1],[0,0,1]],[[1,1,0],[0,1,1]],[[0,1,1],[1,1,0]]];const COLS=['#0af','#ff0','#c0f','#f80','#00f','#f40','#0f0'];let board,piece,next,px,py,score,lines,level,state='idle',loop;function newBoard(){return Array.from({length:H},()=>Array(W).fill(0))}function rnd(){return Math.floor(Math.random()*PIECES.length)}function spawn(){piece=next!=null?next:rnd();next=rnd();px=Math.floor(W/2)-Math.floor(PIECES[piece][0].length/2);py=0;if(col(piece,px,py))end()}function rot(p){return p[0].map((_,i)=>p.map(r=>r[i]).reverse())}function col(id,x,y,s){const sh=s||PIECES[id];for(let r=0;r<sh.length;r++)for(let c2=0;c2<sh[r].length;c2++)if(sh[r][c2]&&(y+r>=H||x+c2<0||x+c2>=W||board[y+r][x+c2]))return true;return false}function place(){const s=PIECES[piece];for(let r=0;r<s.length;r++)for(let c2=0;c2<s[r].length;c2++)if(s[r][c2])board[py+r][px+c2]=piece+1;let cl=0;for(let r=H-1;r>=0;r--){if(board[r].every(v=>v)){board.splice(r,1);board.unshift(Array(W).fill(0));cl++;r++}}if(cl){lines+=cl;score+=[0,100,300,500,800][cl]*level;level=Math.floor(lines/10)+1;document.getElementById('sc').textContent=score;document.getElementById('ln').textContent=lines;document.getElementById('lv').textContent=level;rl()}spawn()}function rl(){if(loop)clearInterval(loop);loop=setInterval(()=>{if(!col(piece,px,py+1))py++;else place();draw()},Math.max(80,500-level*40))}function draw(){ctx.fillStyle='#0a0a0a';ctx.fillRect(0,0,c.width,c.height);for(let r=0;r<H;r++)for(let c2=0;c2<W;c2++)if(board[r][c2]){ctx.fillStyle=COLS[board[r][c2]-1];ctx.fillRect(c2*SZ+1,r*SZ+1,SZ-2,SZ-2)}const s=PIECES[piece];ctx.fillStyle=COLS[piece];let g=py;while(!col(piece,px,g+1))g++;s.forEach((row,r)=>row.forEach((v,c2)=>{if(!v)return;ctx.globalAlpha=0.2;ctx.fillRect((px+c2)*SZ+1,(g+r)*SZ+1,SZ-2,SZ-2);ctx.globalAlpha=1;ctx.fillRect((px+c2)*SZ+1,(py+r)*SZ+1,SZ-2,SZ-2)}));nctx.fillStyle='#0a0a0a';nctx.fillRect(0,0,76,76);const ns=PIECES[next];const ox=Math.floor((4-ns[0].length)/2)*16+6,oy=Math.floor((4-ns.length)/2)*16+6;nctx.fillStyle=COLS[next];ns.forEach((row,r)=>row.forEach((v,c2)=>{if(v)nctx.fillRect(ox+c2*16+1,oy+r*16+1,14,14)}))}function start(){document.getElementById('msg').style.display='none';board=newBoard();score=0;lines=0;level=1;next=null;['sc','ln','lv'].forEach((id,i)=>document.getElementById(id).textContent=[0,0,1][i]);spawn();state='run';rl()}function end(){state='idle';clearInterval(loop);const m=document.getElementById('msg');m.style.display='flex';m.querySelector('h2').textContent='GAME OVER';m.querySelector('p').textContent='Score: '+score+' — Space to restart'}document.addEventListener('keydown',e=>{if(e.key===' '){e.preventDefault();state!=='run'?start():null;return}if(state!=='run')return;if(e.key==='ArrowLeft'&&!col(piece,px-1,py))px--;else if(e.key==='ArrowRight'&&!col(piece,px+1,py))px++;else if(e.key==='ArrowDown'){while(!col(piece,px,py+1))py++;place()}else if(e.key==='ArrowUp'){const r=rot(PIECES[piece]);if(!col(piece,px,py,r))PIECES[piece]=r}draw()});c.addEventListener('touchstart',e=>{if(state!=='run')start()},{passive:true});let ts=0,tx=0;c.addEventListener('touchstart',e=>{ts=Date.now();tx=e.touches[0].clientX},{passive:true});c.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx,dt=Date.now()-ts;if(dt<200&&Math.abs(dx)<20){const r=rot(PIECES[piece]);if(!col(piece,px,py,r))PIECES[piece]=r}else if(dx<-20&&!col(piece,px-1,py))px--;else if(dx>20&&!col(piece,px+1,py))px++;draw()},{passive:true});draw();<\\/script></body></html>`,
+  2048:`<!DOCTYPE html><html><head><meta charset="utf-8"><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:'Segoe UI',sans-serif;color:#fff;gap:12px;overflow:hidden}#top{display:flex;gap:16px;align-items:center}.sb{background:#1a1a1a;border-radius:6px;padding:7px 14px;text-align:center}.sb .l{font-size:9px;font-weight:700;letter-spacing:0.1em;color:#555}.sb .v{font-size:20px;font-weight:700;color:#fff}#grid{background:#111;border-radius:8px;padding:8px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}#msg{position:fixed;inset:0;background:rgba(0,0,0,0.82);display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;text-align:center}#msg h2{font-size:28px;font-weight:700;color:#ffa500}#msg button{background:#ffa500;color:#000;border:none;padding:10px 24px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}</style></head><body><div id="top"><div class="sb"><div class="l">SCORE</div><div class="v" id="sc">0</div></div><div class="sb"><div class="l">BEST</div><div class="v" id="best">0</div></div><button onclick="newGame()" style="background:#222;color:#fff;border:1px solid #333;padding:7px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-family:inherit">New</button></div><div id="grid"></div><div id="msg"><h2 id="mt">YOU WIN!</h2><p id="ms" style="color:#888;font-size:12px"></p><button onclick="newGame()">Play Again</button></div><script>const CM=new Map([[0,'#1a1a1a'],[2,'#2a2a1a'],[4,'#3a2a1a'],[8,'#8f5a2a'],[16,'#b5651d'],[32,'#cc5500'],[64,'#e63000'],[128,'#ffd700'],[256,'#ffaa00'],[512,'#ff7700'],[1024,'#ff4400'],[2048,'#ff2200']]);let board,score,best=0,won;function newGame(){board=Array.from({length:4},()=>Array(4).fill(0));score=0;won=false;add();add();render();document.getElementById('msg').style.display='none'}function add(){const e=[];for(let r=0;r<4;r++)for(let c=0;c<4;c++)if(!board[r][c])e.push([r,c]);if(!e.length)return;const[r,c]=e[Math.floor(Math.random()*e.length)];board[r][c]=Math.random()<0.9?2:4}function slide(row){let r=row.filter(v=>v);for(let i=0;i<r.length-1;i++)if(r[i]===r[i+1]){r[i]*=2;score+=r[i];r[i+1]=0}r=r.filter(v=>v);while(r.length<4)r.push(0);return r}function move(d){const prev=JSON.stringify(board);if(d===0)board=board.map(r=>slide(r));else if(d===2)board=board.map(r=>slide([...r].reverse()).reverse());else{let t=board[0].map((_,c)=>board.map(r=>r[c]));if(d===3)t=t.map(r=>slide([...r].reverse()).reverse());else t=t.map(r=>slide(r));board=board.map((_,r)=>t.map(row=>row[r]))}if(JSON.stringify(board)!==prev){score>best&&(best=score);add();render();if(!won&&board.some(r=>r.includes(2048))){won=true;show('YOU WIN!','Keep going or start over')}else if(!canMove())show('GAME OVER','No moves left')}}function canMove(){for(let r=0;r<4;r++)for(let c=0;c<4;c++){if(!board[r][c])return true;if(c<3&&board[r][c]===board[r][c+1])return true;if(r<3&&board[r][c]===board[r+1][c])return true}return false}function show(t,s){document.getElementById('mt').textContent=t;document.getElementById('ms').textContent=s;document.getElementById('msg').style.display='flex'}function render(){document.getElementById('sc').textContent=score;document.getElementById('best').textContent=best;const g=document.getElementById('grid');g.innerHTML='';const sz=Math.min(window.innerWidth,window.innerHeight)*0.17;board.forEach(row=>row.forEach(v=>{const d=document.createElement('div');d.style.cssText='width:'+sz+'px;height:'+sz+'px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:'+Math.max(10,sz*0.28)+'px;background:'+(CM.get(v)||'#f00')+';color:'+(v<=4?'#888':'#fff');d.textContent=v||'';g.appendChild(d)}))}document.addEventListener('keydown',e=>{const m={'ArrowLeft':0,'ArrowRight':2,'ArrowUp':1,'ArrowDown':3};if(e.key in m){e.preventDefault();move(m[e.key])}});let sx=0,sy=0;document.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.max(Math.abs(dx),Math.abs(dy))<20)return;Math.abs(dx)>Math.abs(dy)?move(dx>0?2:0):move(dy>0?3:1)},{passive:true});newGame();<\\/script></body></html>`,
+  minesweeper:`<!DOCTYPE html><html><head><meta charset="utf-8"><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:'Segoe UI',sans-serif;color:#fff;gap:10px;overflow:hidden}#top{display:flex;gap:16px;align-items:center;font-size:12px;font-weight:600}#ml{color:#f44;font-size:17px;font-weight:800;min-width:36px}#tmr{color:#4af;font-size:17px;font-weight:800;min-width:36px}.nbtn{background:#0078d4;color:#fff;border:none;padding:6px 14px;border-radius:4px;cursor:pointer;font-size:11px;font-family:inherit;font-weight:600}#grid{display:grid;gap:2px;background:#111;padding:6px;border-radius:6px}.cell{width:28px;height:28px;border-radius:3px;border:none;cursor:pointer;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;background:#1e1e1e;color:#fff;transition:background 0.08s;user-select:none}.cell:hover{background:#2a2a2a}.cell.open{background:#111;cursor:default}.cell.mine{background:#400}#msg{color:#4f4;font-size:13px;font-weight:600;height:16px}</style></head><body><div id="top"><div>💣 <span id="ml">0</span></div><button class="nbtn" onclick="newGame()">New</button><div>⏱ <span id="tmr">0</span></div></div><div id="msg"></div><div id="grid"></div><script>const R=14,C=18,M=35;let board,rev,flag,over,first,flags,ti,elapsed;const NC=['','#4af','#4f4','#f44','#44f','#f80','#0ff','#f0f','#888'];function newGame(){clearInterval(ti);board=Array.from({length:R},()=>Array(C).fill(0));rev=Array.from({length:R},()=>Array(C).fill(false));flag=Array.from({length:R},()=>Array(C).fill(false));over=false;first=true;flags=0;elapsed=0;document.getElementById('tmr').textContent=0;document.getElementById('ml').textContent=M;document.getElementById('msg').textContent='';render()}function plant(sr,sc){let p=0;while(p<M){const r=Math.floor(Math.random()*R),c=Math.floor(Math.random()*C);if(board[r][c]===-1||Math.abs(r-sr)<=1&&Math.abs(c-sc)<=1)continue;board[r][c]=-1;p++}for(let r=0;r<R;r++)for(let c=0;c<C;c++)if(board[r][c]!==-1){let n=0;for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){const nr=r+dr,nc=c+dc;if(nr>=0&&nr<R&&nc>=0&&nc<C&&board[nr][nc]===-1)n++}board[r][c]=n}}function reveal(r,c){if(r<0||r>=R||c<0||c>=C||rev[r][c]||flag[r][c])return;rev[r][c]=true;if(board[r][c]===0)for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++)reveal(r+dr,c+dc)}function click(r,c){if(over||rev[r][c]||flag[r][c])return;if(first){first=false;plant(r,c);ti=setInterval(()=>{elapsed++;document.getElementById('tmr').textContent=elapsed},1000)}if(board[r][c]===-1){rev[r][c]=true;over=true;clearInterval(ti);for(let i=0;i<R;i++)for(let j=0;j<C;j++)if(board[i][j]===-1)rev[i][j]=true;document.getElementById('msg').textContent='💥 BOOM!';render();return}reveal(r,c);let left=0;for(let i=0;i<R;i++)for(let j=0;j<C;j++)if(!rev[i][j]&&board[i][j]!==-1)left++;if(left===0){over=true;clearInterval(ti);document.getElementById('msg').textContent='🎉 You Win! '+elapsed+'s'}render()}function doFlag(r,c,e){e.preventDefault();if(over||rev[r][c])return;flag[r][c]=!flag[r][c];flags+=flag[r][c]?1:-1;document.getElementById('ml').textContent=M-flags;render()}function render(){const g=document.getElementById('grid');g.style.gridTemplateColumns='repeat('+C+',28px)';g.innerHTML='';for(let r=0;r<R;r++)for(let c=0;c<C;c++){const d=document.createElement('div');d.className='cell'+(rev[r][c]?' open':'')+(rev[r][c]&&board[r][c]===-1?' mine':'');if(rev[r][c]){if(board[r][c]===-1)d.textContent='💣';else if(board[r][c]>0){d.textContent=board[r][c];d.style.color=NC[board[r][c]]}}else if(flag[r][c])d.textContent='🚩';d.addEventListener('click',()=>click(r,c));d.addEventListener('contextmenu',e=>doFlag(r,c,e));g.appendChild(d)}}newGame();<\\/script></body></html>`,
+  pong:`<!DOCTYPE html><html><head><meta charset="utf-8"><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#000;display:flex;align-items:center;justify-content:center;height:100vh;overflow:hidden}canvas{display:block}#msg{position:absolute;text-align:center;pointer-events:none;color:#fff;font-family:'Segoe UI',sans-serif}#msg h2{font-size:26px;font-weight:700}#msg p{font-size:12px;color:#555;margin-top:6px}</style></head><body><canvas id="c"></canvas><div id="msg"><h2>PONG</h2><p>Space / Tap to start</p></div><script>const c=document.getElementById('c'),ctx=c.getContext('2d');let W,H,ball,p1,p2,sc,state='idle',loop,keys={};function resize(){W=c.width=Math.min(window.innerWidth,window.innerHeight*1.5,760);H=c.height=W*0.6;if(p1){p1.w=W*0.014;p1.h=H*0.18;p2.w=p1.w;p2.h=p1.h;p1.x=W*0.03;p2.x=W-W*0.03-p2.w;ball.r=W*0.013}}window.addEventListener('resize',resize);function init(){p1={x:0,y:0,w:0,h:0,sc:0};p2={x:0,y:0,w:0,h:0,sc:0};ball={x:0,y:0,r:0,vx:0,vy:0};resize();resetBall();p1.y=p2.y=H/2-p1.h/2}function resetBall(){ball.x=W/2;ball.y=H/2;const spd=W*0.008;ball.vx=(Math.random()>0.5?1:-1)*spd;ball.vy=(Math.random()*2-1)*spd*0.4}function step(){ball.x+=ball.vx;ball.y+=ball.vy;if(ball.y-ball.r<0){ball.y=ball.r;ball.vy*=-1}if(ball.y+ball.r>H){ball.y=H-ball.r;ball.vy*=-1}if(ball.x-ball.r<p1.x+p1.w&&ball.y>p1.y&&ball.y<p1.y+p1.h&&ball.vx<0){ball.vx=Math.abs(ball.vx)*1.04;ball.vy+=(ball.y-p1.y-p1.h/2)*0.08}if(ball.x+ball.r>p2.x&&ball.y>p2.y&&ball.y<p2.y+p2.h&&ball.vx>0){ball.vx=-Math.abs(ball.vx)*1.04;ball.vy+=(ball.y-p2.y-p2.h/2)*0.08}ball.vx=Math.max(-W*0.025,Math.min(W*0.025,ball.vx));if(ball.x<0){p2.sc++;document.getElementById('msg');resetBall()}if(ball.x>W){p1.sc++;resetBall()}const spd=H*0.012;const diff=ball.y-(p2.y+p2.h/2);p2.y+=Math.sign(diff)*Math.min(Math.abs(diff),spd);p2.y=Math.max(0,Math.min(H-p2.h,p2.y));if(keys['ArrowUp'])p1.y=Math.max(0,p1.y-spd);if(keys['ArrowDown'])p1.y=Math.min(H-p1.h,p1.y+spd);draw()}function draw(){ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);ctx.setLineDash([H*0.03,H*0.03]);ctx.strokeStyle='rgba(255,255,255,0.08)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#fff';ctx.font='bold '+Math.floor(H*0.1)+'px Segoe UI';ctx.textAlign='center';ctx.fillText(p1.sc,W*0.3,H*0.14);ctx.fillText(p2.sc,W*0.7,H*0.14);ctx.fillRect(p1.x,p1.y,p1.w,p1.h);ctx.fillRect(p2.x,p2.y,p2.w,p2.h);ctx.beginPath();ctx.arc(ball.x,ball.y,ball.r,0,Math.PI*2);ctx.fill()}document.addEventListener('keydown',e=>{keys[e.key]=true;if(e.key===' '){e.preventDefault();if(state!=='run'){state='run';document.getElementById('msg').style.display='none';init();if(loop)clearInterval(loop);loop=setInterval(step,16)}}if(e.key==='ArrowUp'||e.key==='ArrowDown')e.preventDefault()});document.addEventListener('keyup',e=>{keys[e.key]=false});let ty=0;c.addEventListener('touchstart',e=>{ty=e.touches[0].clientY;if(state!=='run'){state='run';document.getElementById('msg').style.display='none';init();if(loop)clearInterval(loop);loop=setInterval(step,16)}},{passive:true});c.addEventListener('touchmove',e=>{const dy=e.touches[0].clientY-ty;ty=e.touches[0].clientY;p1.y=Math.max(0,Math.min(H-p1.h,p1.y+dy))},{passive:true});resize();draw();<\\/script></body></html>`,
+  flappy:`<!DOCTYPE html><html><head><meta charset="utf-8"><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a14;display:flex;align-items:center;justify-content:center;height:100vh;overflow:hidden}canvas{display:block;cursor:pointer}</style></head><body><canvas id="c"></canvas><script>const c=document.getElementById('c'),ctx=c.getContext('2d');let W,H,bird,pipes,score,best=0,state,frame;function resize(){W=c.width=Math.min(400,window.innerWidth);H=c.height=Math.min(580,window.innerHeight)}window.addEventListener('resize',resize);const GAP=155,PW=50,SPEED=2.6,GRAV=0.36,JUMP=-7;function init(){bird={x:W*0.25,y:H*0.45,vy:0,r:13};pipes=[];score=0;frame=0;state='ready'}function flap(){if(state==='dead'){init();return}if(state==='ready')state='run';bird.vy=JUMP}function step(){if(state!=='run')return;frame++;bird.vy+=GRAV;bird.y+=bird.vy;if(bird.y-bird.r<0){bird.y=bird.r;bird.vy=0}if(frame%68===0)pipes.push({x:W,top:Math.random()*(H*0.48-80)+80});pipes.forEach(p=>{p.x-=SPEED;if(p.x+PW<bird.x-bird.r&&!p.passed){p.passed=true;score++}});pipes=pipes.filter(p=>p.x>-PW);for(let p of pipes){if(bird.x+bird.r>p.x&&bird.x-bird.r<p.x+PW){if(bird.y-bird.r<p.top||bird.y+bird.r>p.top+GAP){state='dead';if(score>best)best=score;return}}}if(bird.y+bird.r>H){state='dead';if(score>best)best=score}}function draw(){ctx.fillStyle='#0a0a14';ctx.fillRect(0,0,W,H);pipes.forEach(p=>{ctx.fillStyle='#1a4a1a';ctx.fillRect(p.x,0,PW,p.top);ctx.fillRect(p.x,p.top+GAP,PW,H-p.top-GAP);ctx.fillStyle='#2a6a2a';ctx.fillRect(p.x-3,p.top-14,PW+6,14);ctx.fillRect(p.x-3,p.top+GAP,PW+6,14)});ctx.save();ctx.translate(bird.x,bird.y);ctx.rotate(Math.min(Math.PI/4,bird.vy*0.06));ctx.fillStyle=state==='dead'?'#f44':'#ff0';ctx.beginPath();ctx.arc(0,0,bird.r,0,Math.PI*2);ctx.fill();ctx.fillStyle='#f80';ctx.beginPath();ctx.arc(bird.r*0.5,-bird.r*0.3,bird.r*0.3,0,Math.PI*2);ctx.fill();ctx.restore();ctx.fillStyle='#fff';ctx.font='bold '+Math.floor(W*0.1)+'px Segoe UI';ctx.textAlign='center';ctx.fillText(score,W/2,56);if(state!=='run'){ctx.fillStyle='rgba(0,0,0,0.5)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#fff';ctx.font='bold '+Math.floor(W*0.08)+'px Segoe UI';ctx.fillText(state==='dead'?'GAME OVER':'FLAPPY BIRD',W/2,H*0.4);ctx.font=Math.floor(W*0.044)+'px Segoe UI';ctx.fillStyle='#aaa';ctx.fillText(state==='dead'?'Best: '+best+' — Tap to retry':'Tap or Space to play',W/2,H*0.5)}}document.addEventListener('keydown',e=>{if(e.key===' '){e.preventDefault();flap()}});c.addEventListener('click',flap);c.addEventListener('touchstart',e=>{e.preventDefault();flap()},{passive:false});function loop(){step();draw();requestAnimationFrame(loop)}resize();init();loop();<\\/script></body></html>`,
+  spaceinvaders:`<!DOCTYPE html><html><head><meta charset="utf-8"><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden;font-family:'Segoe UI',sans-serif}canvas{display:block}#hud{color:#0f0;font-size:12px;font-weight:700;letter-spacing:0.08em;margin-bottom:6px;display:flex;gap:28px}#hud span{color:#fff}</style></head><body><div id="hud">SCORE <span id="sc">0</span>&nbsp;LIVES <span id="lv">3</span>&nbsp;LEVEL <span id="lev">1</span></div><canvas id="c"></canvas><script>const c=document.getElementById('c'),ctx=c.getContext('2d'),W=560,H=440;c.width=W;c.height=H;let player,bullets,enemies,ebullets,score,lives,level,state,dir,sTimer,eTimer;const keys={};function init(){player={x:W/2,y:H-36,w:34,h:16};bullets=[];enemies=[];ebullets=[];score=0;lives=3;level=1;state='run';dir=1;sTimer=0;eTimer=0;spawn();upd()}function spawn(){enemies=[];const rows=3+Math.min(level-1,2);for(let r=0;r<rows;r++)for(let cl=0;cl<10;cl++)enemies.push({x:60+cl*44,y:40+r*36,w:28,h:20,row:r,alive:true,color:r===0?'#f44':r===1?'#f80':'#4af'})}function upd(){document.getElementById('sc').textContent=score;document.getElementById('lv').textContent=lives;document.getElementById('lev').textContent=level}document.addEventListener('keydown',e=>{keys[e.key]=true;if(e.key===' '){e.preventDefault();if(state==='idle'||state==='dead'){init();return}}});document.addEventListener('keyup',e=>{keys[e.key]=false});let tx=0;c.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;if(state!=='run')init()},{passive:true});c.addEventListener('touchmove',e=>{const dx=e.touches[0].clientX-tx;tx=e.touches[0].clientX;player.x=Math.max(17,Math.min(W-17,player.x+dx))},{passive:true});c.addEventListener('touchend',()=>{if(state==='run')bullets.push({x:player.x,y:player.y-player.h/2,vy:-9})},{passive:true});function step(){if(state!=='run')return;const spd=4;if(keys['ArrowLeft'])player.x=Math.max(17,player.x-spd);if(keys['ArrowRight'])player.x=Math.min(W-17,player.x+spd);sTimer--;if(keys[' ']&&sTimer<=0){bullets.push({x:player.x,y:player.y-player.h/2,vy:-9});sTimer=14}bullets=bullets.filter(b=>{b.y+=b.vy;return b.y>0});const alive=enemies.filter(e=>e.alive);let drop=false;const edx=dir*(0.4+level*0.08);for(const e of alive){e.x+=edx;if(e.x<20||e.x>W-20){drop=true;break}}if(drop){dir*=-1;for(const e of alive)e.y+=14}eTimer--;if(eTimer<=0&&alive.length){eTimer=Math.max(18,60-level*8);const sh=alive[Math.floor(Math.random()*alive.length)];ebullets.push({x:sh.x,y:sh.y+sh.h/2,vy:4+level*0.5})}ebullets=ebullets.filter(b=>{b.y+=b.vy;return b.y<H});for(const b of bullets)for(const e of alive){if(Math.abs(b.x-e.x)<(14+1.5)&&Math.abs(b.y-e.y)<(10+5)&&e.alive){e.alive=false;b.vy=0;score+=10*(e.row+1);upd();break}}for(const b of ebullets){if(Math.abs(b.x-player.x)<16&&Math.abs(b.y-player.y)<16){b.vy=0;lives--;upd();if(lives<=0)state='dead'}}if(enemies.filter(e=>e.alive).length===0){level++;upd();spawn()}for(const e of enemies.filter(e=>e.alive))if(e.y+e.h/2>player.y-10)state='dead'}function draw(){ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);ctx.fillStyle='#4af';ctx.beginPath();ctx.moveTo(player.x,player.y-player.h/2);ctx.lineTo(player.x-17,player.y+player.h/2);ctx.lineTo(player.x+17,player.y+player.h/2);ctx.closePath();ctx.fill();enemies.filter(e=>e.alive).forEach(e=>{ctx.fillStyle=e.color;ctx.fillRect(e.x-14,e.y-10,28,20)});ctx.fillStyle='#ff0';bullets.forEach(b=>ctx.fillRect(b.x-1.5,b.y-5,3,10));ctx.fillStyle='#f44';ebullets.forEach(b=>ctx.fillRect(b.x-1.5,b.y-4,3,8));if(state!=='run'){ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#4af';ctx.font='bold 32px Segoe UI';ctx.textAlign='center';ctx.fillText(state==='dead'?'GAME OVER':'SPACE INVADERS',W/2,H*0.4);ctx.fillStyle='#888';ctx.font='14px Segoe UI';ctx.fillText('Space / Tap to '+(state==='dead'?'retry':'start'),W/2,H*0.52)}}function gameLoop(){step();draw();requestAnimationFrame(gameLoop)}state='idle';draw();gameLoop();<\\/script></body></html>`,
+  breakout:`<!DOCTYPE html><html><head><meta charset="utf-8"><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:'Segoe UI',sans-serif;overflow:hidden}#hud{color:#aaa;font-size:12px;font-weight:700;letter-spacing:0.06em;margin-bottom:6px;display:flex;gap:24px}#hud span{color:#fff}canvas{cursor:none;display:block}</style></head><body><div id="hud">SCORE <span id="sc">0</span>&nbsp;LIVES <span id="lv">3</span></div><canvas id="c"></canvas><script>const c=document.getElementById('c'),ctx=c.getContext('2d'),W=560,H=420;c.width=W;c.height=H;const ROWS=6,COLS=12,BW=40,BH=14,COLORS=['#ff4444','#ff8800','#ffdd00','#44ff44','#44aaff','#aa44ff'];let paddle,ball,bricks,score,lives,state,pspd;function init(){paddle={x:W/2,y:H-30,w:80,h:12,speed:0};ball={x:W/2,y:H-55,r:7,vx:3.5*(Math.random()>0.5?1:-1),vy:-3.5};bricks=[];score=0;lives=3;state='ready';pspd=0;for(let r=0;r<ROWS;r++)for(let cl=0;cl<COLS;cl++)bricks.push({x:cl*(BW+4)+6,y:r*(BH+4)+42,w:BW,h:BH,alive:true,color:COLORS[r],val:ROWS-r});document.getElementById('sc').textContent=0;document.getElementById('lv').textContent=3}c.addEventListener('mousemove',e=>{const rect=c.getBoundingClientRect();paddle.x=Math.max(paddle.w/2,Math.min(W-paddle.w/2,(e.clientX-rect.left)*(W/rect.width)))});let tx=0;c.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;if(state!=='run'){if(state==='dead')init();state='run'}},{passive:true});c.addEventListener('touchmove',e=>{const dx=e.touches[0].clientX-tx;tx=e.touches[0].clientX;paddle.x=Math.max(paddle.w/2,Math.min(W-paddle.w/2,paddle.x+dx))},{passive:true});const keys={};document.addEventListener('keydown',e=>{keys[e.key]=true;if(e.key===' '){e.preventDefault();if(state!=='run'){if(state==='dead')init();state='run'}}});document.addEventListener('keyup',e=>{keys[e.key]=false});function step(){if(state!=='run')return;if(keys['ArrowLeft'])paddle.x=Math.max(paddle.w/2,paddle.x-6);if(keys['ArrowRight'])paddle.x=Math.min(W-paddle.w/2,paddle.x+6);ball.x+=ball.vx;ball.y+=ball.vy;if(ball.x-ball.r<0){ball.x=ball.r;ball.vx*=-1}if(ball.x+ball.r>W){ball.x=W-ball.r;ball.vx*=-1}if(ball.y-ball.r<0){ball.y=ball.r;ball.vy*=-1}if(ball.y+ball.r>paddle.y-6&&ball.x>paddle.x-paddle.w/2&&ball.x<paddle.x+paddle.w/2&&ball.vy>0){ball.vy=-Math.abs(ball.vy);ball.vx+=(ball.x-paddle.x)*0.09}if(ball.y>H+20){lives--;document.getElementById('lv').textContent=lives;if(lives<=0){state='dead';return}ball.x=W/2;ball.y=H-55;ball.vx=3.5*(Math.random()>0.5?1:-1);ball.vy=-3.5;state='ready'}for(const b of bricks){if(!b.alive)continue;if(ball.x+ball.r>b.x&&ball.x-ball.r<b.x+b.w&&ball.y+ball.r>b.y&&ball.y-ball.r<b.y+b.h){b.alive=false;score+=b.val*10;document.getElementById('sc').textContent=score;const inX=ball.x>b.x&&ball.x<b.x+b.w;ball.vy=inX?-Math.abs(ball.vy):ball.vy;break}}if(bricks.every(b=>!b.alive)){for(const b of bricks)b.alive=true;ball.vx=(Math.abs(ball.vx)+0.4)*(ball.vx>0?1:-1);ball.vy=-Math.abs(ball.vy+0.1 )}}function draw(){ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);bricks.forEach(b=>{if(!b.alive)return;ctx.fillStyle=b.color;ctx.beginPath();ctx.roundRect(b.x,b.y,b.w,b.h,2);ctx.fill()});ctx.fillStyle='#4af';ctx.beginPath();ctx.roundRect(paddle.x-paddle.w/2,paddle.y-6,paddle.w,paddle.h,4);ctx.fill();ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(ball.x,ball.y,ball.r,0,Math.PI*2);ctx.fill();if(state!=='run'){ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#fff';ctx.font='bold 28px Segoe UI';ctx.textAlign='center';ctx.fillText(state==='dead'?'GAME OVER':'BREAKOUT',W/2,H*0.42);ctx.fillStyle='#888';ctx.font='13px Segoe UI';ctx.fillText('Mouse / Arrow keys / Tap to '+(state==='dead'?'retry':'start'),W/2,H*0.52)}}function loop(){step();draw();requestAnimationFrame(loop)}init();loop();<\\/script></body></html>`,
+  pacman:`<!DOCTYPE html><html><head><meta charset="utf-8"><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:'Segoe UI',sans-serif;overflow:hidden}#hud{color:#aaa;font-size:12px;font-weight:700;letter-spacing:0.08em;margin-bottom:6px;display:flex;gap:24px}#hud span{color:#ff0}canvas{display:block}</style></head><body><div id="hud">SCORE <span id="sc">0</span>&nbsp;LIVES <span id="lv">3</span></div><canvas id="c"></canvas><script>const c=document.getElementById('c'),ctx=c.getContext('2d');const TILE=20,COLS=21,ROWS=19;const MAP=['#####################','#........#........#','#.##.###.#.###.##.#','#.##.###.#.###.##.#','#...................#','#.##.#.#####.#.##.#','#....#...#...#....#','####.###.#.###.####','   #.#   G   #.#   ','####.# ##-## #.####','    .  #   #  .    ','####.# ##### #.####','   #.#       #.#   ','####.# ##### #.####','#........#........#','#.##.###.#.###.##.#','#...#.....#.....#..#','##..#.#.#####.#.#..#','#........#........#','#####################'];c.width=COLS*TILE;c.height=ROWS*TILE;let pac,ghosts,dots,score,lives,state,dir,nd,frame;function init(){pac={x:10,y:15,dir:{x:0,y:0},nd:{x:1,y:0},mouth:0,mdir:1};ghosts=[{x:9,y:9,dir:{x:1,y:0},color:'#f44'},{x:10,y:9,dir:{x:-1,y:0},color:'#f8a'},{x:11,y:9,dir:{x:0,y:1},color:'#0ff'},{x:10,y:8,dir:{x:0,y:-1},color:'#f80'}];dots=[];for(let r=0;r<ROWS;r++)for(let cl=0;cl<COLS;cl++)if(MAP[r]&&MAP[r][cl]==='.')dots.push({x:cl,y:r,big:false,alive:true});score=0;lives=3;state='ready';frame=0;document.getElementById('sc').textContent=0;document.getElementById('lv').textContent=3}function wall(x,y){if(x<0||x>=COLS||y<0||y>=ROWS)return true;return MAP[Math.round(y)]&&MAP[Math.round(y)][Math.round(x)]==='#'}function step(){if(state!=='run')return;frame++;pac.mouth+=0.2*pac.mdir;if(pac.mouth>0.4||pac.mouth<0){pac.mdir*=-1}if(!wall(pac.x+pac.nd.x,pac.y+pac.nd.y)){pac.dir=pac.nd}if(!wall(pac.x+pac.dir.x,pac.y+pac.dir.y)){pac.x+=pac.dir.x*0.1;pac.y+=pac.dir.y*0.1;pac.x=((pac.x%COLS)+COLS)%COLS;pac.y=((pac.y%ROWS)+ROWS)%ROWS}dots.forEach(d=>{if(d.alive&&Math.abs(pac.x-d.x)<0.6&&Math.abs(pac.y-d.y)<0.6){d.alive=false;score+=10;document.getElementById('sc').textContent=score}});ghosts.forEach(g=>{if(frame%2===0){const dirs=[{x:1,y:0},{x:-1,y:0},{x:0,y:1},{x:0,y:-1}];const valid=dirs.filter(d=>!wall(g.x+d.x,g.y+d.y));if(valid.length){const best=valid.reduce((a,b)=>Math.hypot(pac.x-g.x-b.x,pac.y-g.y-b.y)<Math.hypot(pac.x-g.x-a.x,pac.y-g.y-a.y)?b:a);g.dir=best;g.x+=g.dir.x*0.08;g.y+=g.dir.y*0.08}if(Math.abs(pac.x-g.x)<0.8&&Math.abs(pac.y-g.y)<0.8){lives--;document.getElementById('lv').textContent=lives;if(lives<=0)state='dead';else{pac.x=10;pac.y=15}}}});if(dots.every(d=>!d.alive)){state='ready';init()}}function draw(){ctx.fillStyle='#000';ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle='#00f';for(let r=0;r<ROWS;r++)for(let cl=0;cl<COLS;cl++)if(MAP[r]&&MAP[r][cl]==='#'){ctx.fillRect(cl*TILE,r*TILE,TILE,TILE)}dots.forEach(d=>{if(!d.alive)return;ctx.fillStyle='#ff0';ctx.beginPath();ctx.arc(d.x*TILE+TILE/2,d.y*TILE+TILE/2,2.5,0,Math.PI*2);ctx.fill()});ctx.save();ctx.translate(pac.x*TILE+TILE/2,pac.y*TILE+TILE/2);ctx.rotate(Math.atan2(pac.dir.y,pac.dir.x));ctx.fillStyle='#ff0';ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,TILE*0.44,pac.mouth,Math.PI*2-pac.mouth);ctx.closePath();ctx.fill();ctx.restore();ghosts.forEach(g=>{ctx.fillStyle=g.color;ctx.beginPath();ctx.arc(g.x*TILE+TILE/2,g.y*TILE+TILE/2,TILE*0.4,Math.PI,0);ctx.lineTo((g.x+1)*TILE-2,g.y*TILE+TILE*0.9);ctx.lineTo(g.x*TILE+TILE*0.7,g.y*TILE+TILE*0.7);ctx.lineTo(g.x*TILE+TILE*0.5,g.y*TILE+TILE*0.9);ctx.lineTo(g.x*TILE+TILE*0.3,g.y*TILE+TILE*0.7);ctx.lineTo(g.x*TILE+2,g.y*TILE+TILE*0.9);ctx.closePath();ctx.fill()});if(state!=='run'){ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle='#ff0';ctx.font='bold 26px Segoe UI';ctx.textAlign='center';ctx.fillText(state==='dead'?'GAME OVER':'PAC-MAN',c.width/2,c.height*0.42);ctx.fillStyle='#888';ctx.font='12px Segoe UI';ctx.fillText('Arrow keys / Swipe — Space to '+(state==='dead'?'retry':'start'),c.width/2,c.height*0.54)}}document.addEventListener('keydown',e=>{const m={'ArrowLeft':{x:-1,y:0},'ArrowRight':{x:1,y:0},'ArrowUp':{x:0,y:-1},'ArrowDown':{x:0,y:1}};if(e.key in m){e.preventDefault();pac.nd=m[e.key]}if(e.key===' '){e.preventDefault();if(state!=='run'){init();state='run'}}});let sx=0,sy=0;c.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;if(state!=='run'){init();state='run'}},{passive:true});c.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>Math.abs(dy))pac.nd=dx>0?{x:1,y:0}:{x:-1,y:0};else pac.nd=dy>0?{x:0,y:1}:{x:0,y:-1}},{passive:true});function loop(){step();draw();requestAnimationFrame(loop)}init();loop();<\\/script></body></html>`,
 };
 const GAME_TITLES={
-  eaglercraft:"Eaglercraft 1.8",krunker:"Krunker.io",slither:"Slither.io",agar:"Agar.io",
-  diep:"Diep.io",mope:"Mope.io",paper:"Paper.io 2",wormate:"Wormate.io",surviv:"Surviv.io",
-  shell:"Shell Shockers","1v1":"1v1.lol",drift:"Drift Boss",slope:"Slope",
-  geometry:"Geometry Dash",amogus:"Impostor.io",powerline:"Powerline.io",
-  tetris:"Tetris",chess:"Chess","2048":"2048",minesweeper:"Minesweeper"
+  eaglercraft:"Eaglercraft 1.8",
+  snake:"Snake",tetris:"Tetris","2048":"2048",minesweeper:"Minesweeper",
+  pong:"Pong",flappy:"Flappy Bird",spaceinvaders:"Space Invaders",
+  breakout:"Breakout",pacman:"Pac-Man"
 };
 
 let currentGameId=null,currentGameUrl=null;
@@ -1077,35 +941,34 @@ let currentGameId=null,currentGameUrl=null;
 function openGame(id){
   currentGameId=id;
   const title=GAME_TITLES[id]||"Game";
-  const url=GAME_URLS[id];
-  currentGameUrl=url;
   document.getElementById("gameTitle").textContent=title;
   const frame=document.getElementById("gameFrame");
   const blockedMsg=document.getElementById("gameBlockedMsg");
   frame.style.display="block";
   blockedMsg.style.display="none";
-  frame.src="";
-  const isLocal=url.startsWith("./")||url.startsWith("/")||url.startsWith("blob:");
-  setTimeout(()=>{
-    frame.src=url;
-    if(isLocal){return;}
-    const bt=setTimeout(()=>{
-      frame.style.display="none";
-      blockedMsg.style.display="flex";
-      document.getElementById("gameBlockedTitle").textContent=title+" — Blocked";
-      document.getElementById("gameBlockedSub").textContent=title+" doesn't allow embedding. Open in a new tab to play.";
-    },7000);
-    frame.onload=()=>{
-      clearTimeout(bt);
-      try{const d=frame.contentDocument||frame.contentWindow.document;if(!d||d.URL==="about:blank"){clearTimeout(bt);frame.style.display="none";blockedMsg.style.display="flex";}}catch(e){}
-    };
-  },60);
-  openWin("gameWindow");
+  frame.removeAttribute("src");
+  if(id==="eaglercraft"){
+    frame.src="./eaglercraft.html";
+    openWin("gameWindow");
+    return;
+  }
+  const src=GAME_SRCS[id];
+  if(src){
+    frame.srcdoc=src;
+    openWin("gameWindow");
+  }else{
+    frame.style.display="none";
+    blockedMsg.style.display="flex";
+    document.getElementById("gameBlockedTitle").textContent=title;
+    document.getElementById("gameBlockedSub").textContent="Game not found.";
+    openWin("gameWindow");
+  }
 }
 
 function openGameExternal(){
-  const url=currentGameUrl||(currentGameId&&GAME_URLS[currentGameId]);
-  if(url)window.open(url,"_blank");
+  if(currentGameId==="eaglercraft"){window.open("./eaglercraft.html","_blank");return;}
+  const src=GAME_SRCS[currentGameId];
+  if(src){const b=new Blob([src],{type:"text/html"});window.open(URL.createObjectURL(b),"_blank")}
 }
 
 const PROXY_HOSTS=[
